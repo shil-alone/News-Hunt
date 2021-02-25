@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.Category"
+    android:background="#f3f3f3">
+
+  <HorizontalScrollView
+      android:id="@+id/hScrollView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:scrollbarSize="1dp">
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnGeneral"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="general"
+              android:textColor="@color/black" />
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnBusiness"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="business"
+              android:textColor="@color/black" />
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnEntertainment"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="entertainment"
+              android:textColor="@color/black" />
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnSports"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="sports"
+              android:textColor="@color/black" />
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnScience"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="science"
+              android:textColor="@color/black" />
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnTechnology"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="technology"
+              android:textColor="@color/black" />
+
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnHealth"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="health"
+              android:textColor="@color/black" />
+
+      </LinearLayout>
+
+  </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/txtCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/hScrollView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="category : General"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:background="@drawable/btn_category_background"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
