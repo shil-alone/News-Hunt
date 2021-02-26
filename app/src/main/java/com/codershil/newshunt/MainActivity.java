@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
 
     // fetching news data from the api using volley
     public void loadNews(){
+        mProgressBar.setVisibility(View.VISIBLE);
         newsList.clear();
         newsRecyclerView.scrollToPosition(0);
         JsonObjectRequest newsRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
