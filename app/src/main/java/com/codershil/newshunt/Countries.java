@@ -95,6 +95,5 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
                 break;
 
         }
-
     }
 }

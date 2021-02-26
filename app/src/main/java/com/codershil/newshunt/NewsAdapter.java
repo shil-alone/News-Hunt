@@ -23,10 +23,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
         this.listener = listener;
     }
 
-    public NewsAdapter() {
-
-    }
-
     @NonNull
     @Override
     public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,7 +33,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
         newsImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.newImageClicked(newsList.get(newsHolder.getAdapterPosition()));
+                listener.newsImageClicked(newsList.get(newsHolder.getAdapterPosition()));
             }
         });
 

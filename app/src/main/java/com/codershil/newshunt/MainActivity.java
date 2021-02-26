@@ -57,17 +57,15 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         // this code is for handling intent coming from country class
         Intent intent = getIntent();
         countryCode = intent.getStringExtra(Countries.getCountryKey());
-
         url = "https://saurav.tech/NewsAPI/top-headlines/category/general/"+countryCode+".json";
         if (countryCode.equals("ev")){
             url = "https://saurav.tech/NewsAPI/everything/bbc-news.json";
         }
 
         // changing the title of action bar
-        changeTitle(countryCode);
-
+        changeTitle();
         // here we are setting up fragment
-        setCategoryFragment(countryCode);
+        setCategoryFragment();
 
         // here we are loading data into recyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
@@ -112,10 +110,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         startActivity(new Intent(MainActivity.this, Countries.class));
     }
 
-
-
-
-    // this method is actual method for getting data from api and show it in the recyclerView
+    // fetching news data from the api using volley
     public void loadNews(){
         newsList.clear();
         newsRecyclerView.scrollToPosition(0);
@@ -135,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
                         newsList.add(new News(author,title,url,urlToImage));
                     }
                     newsAdapter.updateNews(newsList);
-
                 }
 
                 catch (JSONException e) {
@@ -151,10 +145,10 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         }) ;
 
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
-    } // load news method ends here
+    }
 
     @Override
-    public void newImageClicked(News item) {
+    public void newsImageClicked(News item) {
         String url = item.getUrl();
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
@@ -171,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         startActivity(Intent.createChooser(sharingIntent, "Share this News using"));
     }
 
-    public void setCategoryFragment( String countryCode){
+    public void setCategoryFragment(){
 
         if (countryCode.equals("ev")){
             EverythingCategory everythingCategory = new EverythingCategory();
@@ -187,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         }
     }
 
-    public void changeTitle(String countryCode){
+    public void changeTitle(){
         switch (countryCode) {
             case "ev":
                 getSupportActionBar().setTitle("Everything");
