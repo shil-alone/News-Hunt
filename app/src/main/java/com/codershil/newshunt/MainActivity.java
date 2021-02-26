@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -41,11 +42,10 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
     }
 
 
-
     ArrayList<News> newsList = new ArrayList<>() ;
     RecyclerView newsRecyclerView ;
     NewsAdapter newsAdapter = new NewsAdapter(this) ;
-
+    ProgressBar mProgressBar;
 
     // implementing activity lifecycle methods
     @Override
@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         newsRecyclerView = findViewById(R.id.recyclerView);
+        mProgressBar = findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.VISIBLE);
 
         // this code is for handling intent coming from country class
         Intent intent = getIntent();
@@ -130,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
                         newsList.add(new News(author,title,url,urlToImage));
                     }
                     newsAdapter.updateNews(newsList);
+                    mProgressBar.setVisibility(View.GONE);
                 }
 
                 catch (JSONException e) {
@@ -139,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mProgressBar.setVisibility(View.GONE);
                 error.printStackTrace();
                 Toast.makeText(MainActivity.this, "check your internet and restart app", Toast.LENGTH_SHORT).show();
             }
