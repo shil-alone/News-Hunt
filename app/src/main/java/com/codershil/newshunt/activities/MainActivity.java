@@ -1,4 +1,4 @@
-package com.codershil.newshunt;
+package com.codershil.newshunt.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.os.Parcelable;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -20,14 +21,23 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.codershil.newshunt.data.MyDbHandler;
+import com.codershil.newshunt.singleTons.MySingleTon;
+import com.codershil.newshunt.models.News;
+import com.codershil.newshunt.adapters.NewsAdapter;
+import com.codershil.newshunt.interfaces.NewsItemClicked;
+import com.codershil.newshunt.R;
 import com.codershil.newshunt.fragments.Category;
+import com.codershil.newshunt.fragments.EverythingCategory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NewsItemClicked{
+public class MainActivity extends AppCompatActivity implements NewsItemClicked {
 
     public static String countryCode;
 
@@ -43,9 +53,14 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
 
 
     ArrayList<News> newsList = new ArrayList<>() ;
+    static ArrayList<News> savedNews = new ArrayList<>();
     RecyclerView newsRecyclerView ;
     NewsAdapter newsAdapter = new NewsAdapter(this) ;
     ProgressBar mProgressBar;
+
+    MyDbHandler db = new MyDbHandler(MainActivity.this);
+
+
 
     // implementing activity lifecycle methods
     @Override
@@ -55,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         newsRecyclerView = findViewById(R.id.recyclerView);
         mProgressBar = findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.VISIBLE);
+
 
         // this code is for handling intent coming from country class
         Intent intent = getIntent();
@@ -74,6 +90,23 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         newsRecyclerView.setLayoutManager(layoutManager);
         newsRecyclerView.setAdapter(newsAdapter);
         loadNews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.savedNews){
+
+            Toast.makeText(this, "saved image is clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, SavedNews.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -111,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         super.onBackPressed();
         startActivity(new Intent(MainActivity.this, Countries.class));
     }
+
+
 
     // fetching news data from the api using volley
     public void loadNews(){
@@ -168,6 +203,17 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked{
         sharingIntent.putExtra(Intent.EXTRA_TEXT, title + "\n link to news post : "+url);
         sharingIntent.setType("text/plain");
         startActivity(Intent.createChooser(sharingIntent, "Share this News using"));
+    }
+
+    @Override
+    public void deleteButtonClicked(News item) {
+
+    }
+
+    @Override
+    public void saveButtonClicked(News item) {
+        db.addNews(item);
+        savedNews = db.getAllNews();
     }
 
     public void setCategoryFragment(){

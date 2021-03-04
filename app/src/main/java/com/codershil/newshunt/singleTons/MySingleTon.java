@@ -1,4 +1,4 @@
-package com.codershil.newshunt;
+package com.codershil.newshunt.singleTons;
 
 import android.content.Context;
 

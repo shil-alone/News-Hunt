@@ -1,4 +1,4 @@
-package com.codershil.newshunt;
+package com.codershil.newshunt.fragments;
 
 import android.os.Bundle;
 
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.codershil.newshunt.activities.MainActivity;
+import com.codershil.newshunt.R;
 
 
 public class EverythingCategory extends Fragment implements View.OnClickListener {

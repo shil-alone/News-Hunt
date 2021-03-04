@@ -1,4 +1,4 @@
-package com.codershil.newshunt;
+package com.codershil.newshunt.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.codershil.newshunt.R;
 
 public class Countries extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,7 +50,7 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-        Intent intent = new Intent(Countries.this,MainActivity.class);
+        Intent intent = new Intent(Countries.this, MainActivity.class);
         String country ="" ;
 
         switch (v.getId()){

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.codershil.newshunt.MainActivity;
+import com.codershil.newshunt.activities.MainActivity;
 import com.codershil.newshunt.R;
 
 public class Category extends Fragment implements View.OnClickListener {
