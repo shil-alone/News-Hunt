@@ -62,44 +62,44 @@ public class Category extends Fragment implements View.OnClickListener {
             case R.id.btnEntertainment:
                 MainActivity.setUrl("https://saurav.tech/NewsAPI/top-headlines/category/entertainment/"+countryCode+".json");
                 ( (MainActivity)getActivity()).loadNews();
-                txtCategory.setText("category : Entertainment");
+                txtCategory.setText("Category : Entertainment");
 
                 break;
 
             case R.id.btnGeneral:
                 MainActivity.setUrl("https://saurav.tech/NewsAPI/top-headlines/category/general/"+countryCode+".json");
                 ( (MainActivity)getActivity()).loadNews();
-                txtCategory.setText("category : General");
+                txtCategory.setText("Category : General");
                 break;
 
             case R.id.btnBusiness:
                 MainActivity.setUrl("https://saurav.tech/NewsAPI/top-headlines/category/business/"+countryCode+".json");
                 ( (MainActivity)getActivity()).loadNews();
-                txtCategory.setText("category : Business");
+                txtCategory.setText("Category : Business");
                 break;
 
             case R.id.btnScience:
                 MainActivity.setUrl("https://saurav.tech/NewsAPI/top-headlines/category/science/"+countryCode+".json");
                 ( (MainActivity)getActivity()).loadNews();
-                txtCategory.setText("category : Science");
+                txtCategory.setText("Category : Science");
                 break;
 
             case R.id.btnTechnology:
                 MainActivity.setUrl("https://saurav.tech/NewsAPI/top-headlines/category/technology/"+countryCode+".json");
                 ( (MainActivity)getActivity()).loadNews();
-                txtCategory.setText("category : Technology");
+                txtCategory.setText("Category : Technology");
                 break;
 
             case R.id.btnSports:
                 MainActivity.setUrl("https://saurav.tech/NewsAPI/top-headlines/category/sports/"+countryCode+".json");
                 ( (MainActivity)getActivity()).loadNews();
-                txtCategory.setText("category : Sports");
+                txtCategory.setText("Category : Sports");
                 break;
 
             case R.id.btnHealth:
                 MainActivity.setUrl("https://saurav.tech/NewsAPI/top-headlines/category/health/"+countryCode+".json");
                 ( (MainActivity)getActivity()).loadNews();
-                txtCategory.setText("category : Health");
+                txtCategory.setText("Category : Health");
                 break;
 
 

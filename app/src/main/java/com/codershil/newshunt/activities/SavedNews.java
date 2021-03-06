@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.codershil.newshunt.R;
 import com.codershil.newshunt.adapters.SavedNewsAdapter;
@@ -16,11 +17,14 @@ import com.codershil.newshunt.interfaces.NewsItemClicked;
 import com.codershil.newshunt.models.News;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SavedNews extends AppCompatActivity implements NewsItemClicked {
 
-    ArrayList<News> newsList = MainActivity.savedNews;
+    MyDbHandler db = new MyDbHandler(SavedNews.this);
+    static ArrayList<News> newsList ;
     RecyclerView savedNewsRV ;
     SavedNewsAdapter mSavedNewsAdapter = new SavedNewsAdapter(this) ;
 
@@ -35,8 +39,15 @@ public class SavedNews extends AppCompatActivity implements NewsItemClicked {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         savedNewsRV.setLayoutManager(layoutManager);
         savedNewsRV.setAdapter(mSavedNewsAdapter);
-
+        Collections.reverse(newsList);
         mSavedNewsAdapter.updateNews(newsList);
+        getSupportActionBar().setTitle("Saved News");
+
+    }
+
+    public void getFullNews(MyDbHandler database){
+        newsList = database.getAllNews() ;
+        db = database ;
     }
 
 
@@ -59,13 +70,18 @@ public class SavedNews extends AppCompatActivity implements NewsItemClicked {
     }
 
     @Override
-    public void deleteButtonClicked(News item) {
+    public void deleteButtonClicked(News item,int position) {
+        db.deleteNews(item);
+        newsList.remove(position);
+        Toast.makeText(this, "News Deleted", Toast.LENGTH_SHORT).show();
+        mSavedNewsAdapter.updateNews(newsList);
     }
 
     @Override
     public void saveButtonClicked(News item) {
 
     }
+
 
 
 }

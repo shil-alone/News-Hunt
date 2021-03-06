@@ -52,7 +52,7 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsHolder> {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(parent.getContext(), "delete button is clicked", Toast.LENGTH_SHORT).show();
+                listener.deleteButtonClicked(newsList.get(savedNewsHolder.getAdapterPosition()),savedNewsHolder.getAdapterPosition());
             }
         });
         return savedNewsHolder;

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +33,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NewsItemClicked {
@@ -53,12 +51,14 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
 
 
     ArrayList<News> newsList = new ArrayList<>() ;
-    static ArrayList<News> savedNews = new ArrayList<>();
+    ArrayList<News> savedNewsList = new ArrayList<>() ;
     RecyclerView newsRecyclerView ;
     NewsAdapter newsAdapter = new NewsAdapter(this) ;
     ProgressBar mProgressBar;
 
     MyDbHandler db = new MyDbHandler(MainActivity.this);
+    SavedNews mSavedNews = new SavedNews();
+
 
 
 
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         newsRecyclerView = findViewById(R.id.recyclerView);
         mProgressBar = findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.VISIBLE);
+
 
 
         // this code is for handling intent coming from country class
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.savedNews){
 
+            mSavedNews.getFullNews(db);
             Toast.makeText(this, "saved image is clicked", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, SavedNews.class);
             startActivity(intent);
@@ -206,15 +208,17 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     }
 
     @Override
-    public void deleteButtonClicked(News item) {
+    public void deleteButtonClicked(News item,int position) {
 
     }
 
     @Override
     public void saveButtonClicked(News item) {
         db.addNews(item);
-        savedNews = db.getAllNews();
+        savedNewsList = db.getAllNews();
+        Toast.makeText(MainActivity.this, "News Saved", Toast.LENGTH_SHORT).show();
     }
+
 
     public void setCategoryFragment(){
 
