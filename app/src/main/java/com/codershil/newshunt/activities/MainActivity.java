@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     SavedNews mSavedNews = new SavedNews();
 
 
-
-
     // implementing activity lifecycle methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {

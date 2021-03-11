@@ -7,121 +7,170 @@
     tools:context=".activities.Countries"
     android:background="#ffffff">
 
-    <TextView
-        android:id="@+id/txtCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose your Country"
-        android:textSize="25sp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/txtCountry"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-
-        <LinearLayout
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="20dp"
+            android:rowCount="3"
+            android:columnCount="2">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnEverything"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background"
-                android:padding="15dp"
-                android:text="Everything"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <androidx.appcompat.widget.AppCompatButton
+            <LinearLayout
                 android:id="@+id/btnIndia"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background"
-                android:padding="15dp"
-                android:text="India"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="5sp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/btn_background">
 
-            <androidx.appcompat.widget.AppCompatButton
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/india"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="India"
+                    android:textStyle="bold"
+                    android:textSize="23sp"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/btnUSA"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background"
-                android:padding="15dp"
-                android:text="USA"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="5sp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/btn_background">
 
-            <androidx.appcompat.widget.AppCompatButton
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/usa"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="USA"
+                    android:textStyle="bold"
+                    android:textSize="23sp"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/btnUK"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background"
-                android:padding="15dp"
-                android:text="United Kingdom"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="5sp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/btn_background">
 
-            <androidx.appcompat.widget.AppCompatButton
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/uk"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UK"
+                    android:textStyle="bold"
+                    android:textSize="23sp"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/btnAustralia"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background"
-                android:padding="15dp"
-                android:text="Australia"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="5sp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/btn_background">
 
-            <androidx.appcompat.widget.AppCompatButton
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/australia"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Australia"
+                    android:textStyle="bold"
+                    android:textSize="23sp"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/btnFrance"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background"
-                android:padding="15dp"
-                android:text="France"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="5sp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/btn_background">
 
-            <androidx.appcompat.widget.AppCompatButton
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/france"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="France"
+                    android:textStyle="bold"
+                    android:textSize="23sp"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/btnRussia"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background"
-                android:padding="15dp"
-                android:text="Russia"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="5sp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/btn_background">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/russia"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Russia"
+                    android:textStyle="bold"
+                    android:textSize="23sp"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
 
 
-        </LinearLayout>
+        </GridLayout>
 
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

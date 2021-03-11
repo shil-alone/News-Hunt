@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.codershil.newshunt.R;
 
 public class Countries extends AppCompatActivity implements View.OnClickListener {
 
     public static String COUNTRY_KEY = "COUNTRY";
-    Button btnEverything, btnIndia, btnUSA , btnUK , btnAustralia , btnFrance , btnRussia;
+    LinearLayout btnIndia, btnUSA , btnUK , btnAustralia , btnFrance , btnRussia;
 
     public static String getCountryKey(){
         return COUNTRY_KEY;
@@ -28,7 +29,6 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
     }
 
     public void initializeViews(){
-        btnEverything = findViewById(R.id.btnEverything);
         btnIndia = findViewById(R.id.btnIndia);
         btnUSA = findViewById(R.id.btnUSA);
         btnUK = findViewById(R.id.btnUK);
@@ -37,9 +37,7 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
         btnRussia = findViewById(R.id.btnRussia);
     }
 
-    public void applyClicks(){
-        btnEverything.setOnClickListener(this);
-        btnIndia.setOnClickListener(this);
+    public void applyClicks(){ btnIndia.setOnClickListener(this);
         btnUSA.setOnClickListener(this);
         btnUK.setOnClickListener(this);
         btnAustralia.setOnClickListener(this);
@@ -54,11 +52,6 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
         String country ="" ;
 
         switch (v.getId()){
-            case R.id.btnEverything:
-                country = "ev";
-                intent.putExtra(COUNTRY_KEY,country);
-                startActivity(intent);
-                break;
 
             case R.id.btnIndia:
                 country = "in";
