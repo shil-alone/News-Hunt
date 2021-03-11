@@ -93,6 +93,46 @@
               android:text="health"
               android:textColor="@color/black" />
 
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnBbcNews"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="BBC News"
+              android:textColor="@color/black" />
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnCnn"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="CNN"
+              android:textColor="@color/black" />
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnFoxNews"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="FOX News"
+              android:textColor="@color/black" />
+
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnGoogleNews"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="Google News"
+              android:textColor="@color/black" />
+
       </LinearLayout>
 
   </HorizontalScrollView>

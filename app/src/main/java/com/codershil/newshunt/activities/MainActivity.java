@@ -28,7 +28,6 @@ import com.codershil.newshunt.adapters.NewsAdapter;
 import com.codershil.newshunt.interfaces.NewsItemClicked;
 import com.codershil.newshunt.R;
 import com.codershil.newshunt.fragments.Category;
-import com.codershil.newshunt.fragments.EverythingCategory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,9 +41,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     private static String url ;
     private static String category = "general";
 
-    public static void setUrl(String apiurl){
-        url = apiurl ;
-    }
     public static void setCategory(String cat){
         category = cat ;
     }
@@ -74,9 +70,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         // this code is for handling intent coming from country class
         Intent intent = getIntent();
         countryCode = intent.getStringExtra(Countries.getCountryKey());
-        if (countryCode.equals("ev")){
-            url = "https://saurav.tech/NewsAPI/everything/bbc-news.json";
-        }
 
         if (savedInstanceState!=null){
             url =savedInstanceState.getString("url");
@@ -118,7 +111,18 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
              case "health":
                 txtCategory.setText("Category : Health");
                 break;
-
+            case "bbc":
+                txtCategory.setText("Category : BBC News");
+                break;
+            case "fox":
+                txtCategory.setText("Category : Fox News");
+                break;
+            case "google":
+                txtCategory.setText("Category : Google News");
+                break;
+            case "cnn":
+                txtCategory.setText("Category : CNN News");
+                break;
         }
     }
     @Override
@@ -154,7 +158,8 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
 
     // fetching news data from the api using volley
     public void loadNews(){
-        url = "https://saurav.tech/NewsAPI/top-headlines/category/"+category+ "/"+countryCode+".json";
+
+        setUrl();
         mProgressBar.setVisibility(View.VISIBLE);
         newsList.clear();
         newsRecyclerView.scrollToPosition(0);
@@ -227,19 +232,10 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
 
 
     public void setCategoryFragment(){
-
-        if (countryCode.equals("ev")){
-            EverythingCategory everythingCategory = new EverythingCategory();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_linear_layout , everythingCategory);
-            fragmentTransaction.commit();
-        }
-        else {
             Category category = new Category();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_linear_layout, category);
             fragmentTransaction.commit();
-        }
     }
 
     public void changeTitle(){
@@ -265,6 +261,25 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
             case "fr":
                 getSupportActionBar().setTitle("France");
                 break;
+        }
+    }
+
+    public void setUrl(){
+        switch (category) {
+            case "bbc":
+                url = "https://saurav.tech/NewsAPI/everything/bbc-news.json";
+                break;
+            case "fox":
+                url = "https://saurav.tech/NewsAPI/everything/fox-news.json";
+                break;
+            case "cnn":
+                url = "https://saurav.tech/NewsAPI/everything/cnn.json";
+                break;
+            case "google":
+                url = "https://saurav.tech/NewsAPI/everything/google-news.json";
+                break;
+            default:
+                url = "https://saurav.tech/NewsAPI/top-headlines/category/"+category+ "/"+countryCode+".json";
         }
     }
 
