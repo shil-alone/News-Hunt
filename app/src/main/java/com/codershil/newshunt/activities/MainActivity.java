@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,16 +38,15 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NewsItemClicked {
 
-    public static String countryCode;
-
+    String countryCode;
     private static String url ;
+    private static String category = "general";
 
     public static void setUrl(String apiurl){
         url = apiurl ;
     }
-
-    public static String getCountryCode(){
-        return countryCode;
+    public static void setCategory(String cat){
+        category = cat ;
     }
 
 
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     RecyclerView newsRecyclerView ;
     NewsAdapter newsAdapter = new NewsAdapter(this) ;
     ProgressBar mProgressBar;
+    TextView txtCategory ;
 
     MyDbHandler db = new MyDbHandler(MainActivity.this);
     SavedNews mSavedNews = new SavedNews();
@@ -70,15 +71,18 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         newsRecyclerView = findViewById(R.id.recyclerView);
         mProgressBar = findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.VISIBLE);
-
-
+        txtCategory = findViewById(R.id.txtCategory);
 
         // this code is for handling intent coming from country class
         Intent intent = getIntent();
         countryCode = intent.getStringExtra(Countries.getCountryKey());
-        url = "https://saurav.tech/NewsAPI/top-headlines/category/general/"+countryCode+".json";
         if (countryCode.equals("ev")){
             url = "https://saurav.tech/NewsAPI/everything/bbc-news.json";
+        }
+
+        if (savedInstanceState!=null){
+            url =savedInstanceState.getString("url");
+            txtCategory.setText(savedInstanceState.getString("text"));
         }
 
         // changing the title of action bar
@@ -93,6 +97,32 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         loadNews();
     }
 
+    public void changeText(){
+        switch (category) {
+             case "general":
+                txtCategory.setText("Category : General");
+                break;
+             case "business":
+                txtCategory.setText("Category : Business");
+                break;
+             case "entertainment":
+                txtCategory.setText("Category : Entertainment");
+                break;
+             case "sports":
+                txtCategory.setText("Category : Sports");
+                break;
+             case "science":
+                txtCategory.setText("Category : Science");
+                break;
+             case "technology":
+                txtCategory.setText("Category : Technology");
+                break;
+             case "health":
+                txtCategory.setText("Category : Health");
+                break;
+
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
@@ -102,9 +132,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.savedNews){
-
             mSavedNews.getFullNews(db);
-            Toast.makeText(this, "saved image is clicked", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, SavedNews.class);
             startActivity(intent);
         }
@@ -112,35 +140,13 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("url",url);
+        outState.putString("text",txtCategory.getText().toString());
         super.onSaveInstanceState(outState);
     }
 
+    // i have to remove this code after using the shared prefrences
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -148,9 +154,9 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     }
 
 
-
     // fetching news data from the api using volley
     public void loadNews(){
+        url = "https://saurav.tech/NewsAPI/top-headlines/category/"+category+ "/"+countryCode+".json";
         mProgressBar.setVisibility(View.VISIBLE);
         newsList.clear();
         newsRecyclerView.scrollToPosition(0);
@@ -188,6 +194,8 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
 
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
     }
+
+
 
     @Override
     public void newsImageClicked(News item) {
