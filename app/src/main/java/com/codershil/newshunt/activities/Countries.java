@@ -2,7 +2,9 @@ package com.codershil.newshunt.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,16 +15,27 @@ import com.codershil.newshunt.R;
 public class Countries extends AppCompatActivity implements View.OnClickListener {
 
     public static String COUNTRY_KEY = "COUNTRY";
+    int isCountrySelected = 0 ;
     LinearLayout btnIndia, btnUSA , btnUK , btnAustralia , btnFrance , btnRussia;
 
-    public static String getCountryKey(){
-        return COUNTRY_KEY;
-    }
 
+    // this will sharedPreference file
+    SharedPreferences mPreferences ;
+    public static String sharedPrefFile = "com.codershil.newshunt.settingPrefs" ;
+    public static String isCountry = "isCountrySelected";
+    String countryString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        isCountrySelected = mPreferences.getInt(isCountry,0);
+        countryString = mPreferences.getString(COUNTRY_KEY,"in");
+        if (isCountrySelected==1){
+            finish();
+            startActivity(new Intent(Countries.this,MainActivity.class));
+        }
+
         setContentView(R.layout.activity_countries);
         initializeViews();
         applyClicks();
@@ -45,47 +58,60 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
         btnRussia.setOnClickListener(this);
     }
 
+
     @Override
     public void onClick(View v) {
 
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit() ;
         Intent intent = new Intent(Countries.this, MainActivity.class);
-        String country ="" ;
-
+        String country ;
         switch (v.getId()){
 
             case R.id.btnIndia:
                 country = "in";
-                intent.putExtra(COUNTRY_KEY ,country);
+                preferencesEditor.putInt(isCountry,1);
+                preferencesEditor.putString(COUNTRY_KEY,country);
+                preferencesEditor.apply();
                 startActivity(intent);
                 break;
 
             case R.id.btnUSA:
                 country = "us";
-                intent.putExtra(COUNTRY_KEY,country);
+                preferencesEditor.putInt(isCountry,1);
+                preferencesEditor.putString(COUNTRY_KEY,country);
+                preferencesEditor.apply();
                 startActivity(intent);
                 break;
 
             case R.id.btnAustralia:
                 country = "au";
-                intent.putExtra(COUNTRY_KEY ,country);
+                preferencesEditor.putInt(isCountry,1);
+                preferencesEditor.putString(COUNTRY_KEY,country);
+                preferencesEditor.apply();
                 startActivity(intent);
                 break;
 
             case R.id.btnUK:
                 country = "gb";
-                intent.putExtra(COUNTRY_KEY ,country);
+                preferencesEditor.putInt(isCountry,1);
+                preferencesEditor.putString(COUNTRY_KEY,country);
+                preferencesEditor.apply();
                 startActivity(intent);
                 break;
 
             case R.id.btnFrance:
                 country = "fr";
-                intent.putExtra(COUNTRY_KEY ,country);
+                preferencesEditor.putInt(isCountry,1);
+                preferencesEditor.putString(COUNTRY_KEY,country);
+                preferencesEditor.apply();
                 startActivity(intent);
                 break;
 
             case R.id.btnRussia:
                 country = "ru";
-                intent.putExtra(COUNTRY_KEY ,country);
+                preferencesEditor.putInt(isCountry,1);
+                preferencesEditor.putString(COUNTRY_KEY,country);
+                preferencesEditor.apply();
                 startActivity(intent);
                 break;
 

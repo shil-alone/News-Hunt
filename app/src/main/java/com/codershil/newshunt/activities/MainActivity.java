@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,11 +42,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     private static String url ;
     private static String category = "general";
 
-    public static void setCategory(String cat){
-        category = cat ;
-    }
-
-
     ArrayList<News> newsList = new ArrayList<>() ;
     ArrayList<News> savedNewsList = new ArrayList<>() ;
     RecyclerView newsRecyclerView ;
@@ -56,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     MyDbHandler db = new MyDbHandler(MainActivity.this);
     SavedNews mSavedNews = new SavedNews();
 
+    SharedPreferences mPreferences ;
 
     // implementing activity lifecycle methods
     @Override
@@ -67,9 +64,10 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         mProgressBar.setVisibility(View.VISIBLE);
         txtCategory = findViewById(R.id.txtCategory);
 
+        mPreferences = getSharedPreferences(Countries.sharedPrefFile,MODE_PRIVATE);
+
         // this code is for handling intent coming from country class
-        Intent intent = getIntent();
-        countryCode = intent.getStringExtra(Countries.getCountryKey());
+        countryCode = mPreferences.getString(Countries.COUNTRY_KEY,"in");
 
         if (savedInstanceState!=null){
             url =savedInstanceState.getString("url");
@@ -87,74 +85,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         newsRecyclerView.setAdapter(newsAdapter);
         loadNews();
     }
-
-    public void changeText(){
-        switch (category) {
-             case "general":
-                txtCategory.setText("Category : General");
-                break;
-             case "business":
-                txtCategory.setText("Category : Business");
-                break;
-             case "entertainment":
-                txtCategory.setText("Category : Entertainment");
-                break;
-             case "sports":
-                txtCategory.setText("Category : Sports");
-                break;
-             case "science":
-                txtCategory.setText("Category : Science");
-                break;
-             case "technology":
-                txtCategory.setText("Category : Technology");
-                break;
-             case "health":
-                txtCategory.setText("Category : Health");
-                break;
-            case "bbc":
-                txtCategory.setText("Category : BBC News");
-                break;
-            case "fox":
-                txtCategory.setText("Category : Fox News");
-                break;
-            case "google":
-                txtCategory.setText("Category : Google News");
-                break;
-            case "cnn":
-                txtCategory.setText("Category : CNN News");
-                break;
-        }
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.savedNews){
-            mSavedNews.getFullNews(db);
-            Intent intent = new Intent(MainActivity.this, SavedNews.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString("url",url);
-        outState.putString("text",txtCategory.getText().toString());
-        super.onSaveInstanceState(outState);
-    }
-
-    // i have to remove this code after using the shared prefrences
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(MainActivity.this, Countries.class));
-    }
-
 
     // fetching news data from the api using volley
     public void loadNews(){
@@ -198,7 +128,35 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("url",url);
+        outState.putString("text",txtCategory.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
 
+    // i have to remove this code after adding the shared prefrences
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(MainActivity.this, Countries.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.savedNews){
+            mSavedNews.getFullNews(db);
+            Intent intent = new Intent(MainActivity.this, SavedNews.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void newsImageClicked(News item) {
@@ -219,9 +177,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     }
 
     @Override
-    public void deleteButtonClicked(News item,int position) {
-
-    }
+    public void deleteButtonClicked(News item,int position) { }
 
     @Override
     public void saveButtonClicked(News item) {
@@ -229,7 +185,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         savedNewsList = db.getAllNews();
         Toast.makeText(MainActivity.this, "News Saved", Toast.LENGTH_SHORT).show();
     }
-
 
     public void setCategoryFragment(){
             Category category = new Category();
@@ -264,6 +219,44 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         }
     }
 
+    public void changeText(){
+        switch (category) {
+            case "general":
+                txtCategory.setText("Category : General");
+                break;
+            case "business":
+                txtCategory.setText("Category : Business");
+                break;
+            case "entertainment":
+                txtCategory.setText("Category : Entertainment");
+                break;
+            case "sports":
+                txtCategory.setText("Category : Sports");
+                break;
+            case "science":
+                txtCategory.setText("Category : Science");
+                break;
+            case "technology":
+                txtCategory.setText("Category : Technology");
+                break;
+            case "health":
+                txtCategory.setText("Category : Health");
+                break;
+            case "bbc":
+                txtCategory.setText("Category : BBC News");
+                break;
+            case "fox":
+                txtCategory.setText("Category : Fox News");
+                break;
+            case "google":
+                txtCategory.setText("Category : Google News");
+                break;
+            case "cnn":
+                txtCategory.setText("Category : CNN News");
+                break;
+        }
+    }
+
     public void setUrl(){
         switch (category) {
             case "bbc":
@@ -283,5 +276,8 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         }
     }
 
+    public static void setCategory(String cat){
+        category = cat ;
+    }
 
 }
