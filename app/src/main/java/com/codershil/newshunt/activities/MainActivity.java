@@ -38,7 +38,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NewsItemClicked {
 
-    String countryCode;
+    public static String countryCode;
     private static String url ;
     private static String category = "general";
 
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
             url =savedInstanceState.getString("url");
             txtCategory.setText(savedInstanceState.getString("text"));
         }
-
         // changing the title of action bar
         changeTitle();
         // here we are setting up fragment
@@ -86,13 +85,26 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         loadNews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        changeTitle();
+        loadNews();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        changeTitle();
+        loadNews();
+    }
+
     // fetching news data from the api using volley
     public void loadNews(){
 
         setUrl();
         mProgressBar.setVisibility(View.VISIBLE);
         newsList.clear();
-        newsRecyclerView.scrollToPosition(0);
         JsonObjectRequest newsRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -109,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
                         newsList.add(new News(author,title,url,urlToImage));
                     }
                     newsAdapter.updateNews(newsList);
+                    newsRecyclerView.scrollToPosition(0);
                     mProgressBar.setVisibility(View.GONE);
                 }
 
@@ -135,13 +148,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         super.onSaveInstanceState(outState);
     }
 
-    // i have to remove this code after adding the shared prefrences
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(MainActivity.this, Countries.class));
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
@@ -153,6 +159,10 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         if (item.getItemId() == R.id.savedNews){
             mSavedNews.getFullNews(db);
             Intent intent = new Intent(MainActivity.this, SavedNews.class);
+            startActivity(intent);
+        }
+        else if (item.getItemId() == R.id.settings){
+            Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -194,6 +204,11 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     }
 
     public void changeTitle(){
+
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(Countries.COUNTRY_KEY,countryCode);
+        editor.apply();
+
         switch (countryCode) {
             case "ev":
                 getSupportActionBar().setTitle("Everything");

@@ -6,4 +6,8 @@
         android:id="@+id/savedNews"
         android:title="Saved News"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/settings"
+        android:title="Settings"
+        app:showAsAction="never" />
 </menu>

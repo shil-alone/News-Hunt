@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ListPreference
+            android:defaultValue="false"
+            android:entries="@array/countries_array"
+            android:entryValues="@array/countries_value"
+            android:key="countries_list"
+            android:title="Change Country"
+            android:dialogIcon="@drawable/everything"
+            android:icon="@drawable/everything"/>
+
+</PreferenceScreen>
