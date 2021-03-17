@@ -1,6 +1,5 @@
 package com.codershil.newshunt.activities;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

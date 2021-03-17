@@ -133,6 +133,17 @@
               android:text="Google News"
               android:textColor="@color/black" />
 
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/btnSource"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_margin="9dp"
+              android:layout_weight="1"
+              android:background="@drawable/btn_category_background"
+              android:text="Get Sources"
+              android:textColor="@color/black" />
+
+
       </LinearLayout>
 
   </HorizontalScrollView>

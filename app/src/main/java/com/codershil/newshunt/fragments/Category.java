@@ -17,6 +17,7 @@ public class Category extends Fragment implements View.OnClickListener {
 
     Button btnEntertainment, bntGeneral ,btnBusiness, btnSports, btnScience, btnTechnology, btnHealth;
     Button btnBbcNews , btnCnn , btnFoxNews , btnGoogleNews;
+    Button btnSource;
     TextView txtCategory;
 
     public Category() {
@@ -47,6 +48,7 @@ public class Category extends Fragment implements View.OnClickListener {
         btnCnn = view.findViewById(R.id.btnCnn);
         btnFoxNews = view.findViewById(R.id.btnFoxNews);
         btnGoogleNews = view.findViewById(R.id.btnGoogleNews);
+        btnSource = view.findViewById(R.id.btnSource);
     }
     private void setClickListners(){
         bntGeneral.setOnClickListener(this);
@@ -60,6 +62,7 @@ public class Category extends Fragment implements View.OnClickListener {
         btnCnn.setOnClickListener(this);
         btnFoxNews.setOnClickListener(this);
         btnGoogleNews.setOnClickListener(this);
+        btnSource.setOnClickListener(this);
     }
 
 
@@ -69,6 +72,7 @@ public class Category extends Fragment implements View.OnClickListener {
             case R.id.btnEntertainment:
                 MainActivity.setCategory("entertainment");
                 ( (MainActivity)getActivity()).loadNews();
+                MainActivity.isNews = 1;
                 ( (MainActivity)getActivity()).changeText();
 
                 break;
@@ -77,60 +81,77 @@ public class Category extends Fragment implements View.OnClickListener {
                 MainActivity.setCategory("general");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnBusiness:
                 MainActivity.setCategory("business");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnScience:
                 MainActivity.setCategory("science");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnTechnology:
                 MainActivity.setCategory("technology");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnSports:
                 MainActivity.setCategory("sports");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnHealth:
                 MainActivity.setCategory("health");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnBbcNews:
                 MainActivity.setCategory("bbc");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnCnn:
                 MainActivity.setCategory("cnn");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnFoxNews:
                 MainActivity.setCategory("fox");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
                 break;
 
             case R.id.btnGoogleNews:
                 MainActivity.setCategory("google");
                 ( (MainActivity)getActivity()).loadNews();
                 ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 1;
+                break;
+
+            case R.id.btnSource:
+                MainActivity.setCategory("sources");
+                ( (MainActivity)getActivity()).loadSources();
+                ( (MainActivity)getActivity()).changeText();
+                MainActivity.isNews = 0;
                 break;
 
 

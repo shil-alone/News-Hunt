@@ -3,7 +3,6 @@ package com.codershil.newshunt.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,9 +18,8 @@ import java.util.ArrayList;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
 
-    NewsItemClicked listener ;
+    NewsItemClicked listener;
     ArrayList<News> newsList = new ArrayList<>();
-
 
     public NewsAdapter(NewsItemClicked listener) {
         this.listener = listener;
@@ -31,9 +29,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
     @NonNull
     @Override
     public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item,parent,false);
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item, parent, false);
         NewsHolder newsHolder = new NewsHolder(view);
-        ImageView newsImage  = newsHolder.newsImage;
+        ImageView newsImage = newsHolder.newsImage;
         ImageView btnShare = newsHolder.btnShare;
         ImageView btnSave = newsHolder.btnSave;
         newsImage.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +55,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
                 listener.saveButtonClicked(newsList.get(newsHolder.getAdapterPosition()));
             }
         });
-
-
         return newsHolder;
     }
 
@@ -72,7 +69,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
         else {
             Glide.with(holder.itemView.getContext()).load(news.getUrlToImage()).into(holder.newsImage);
         }
-
     }
 
     @Override
@@ -86,8 +82,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
         notifyDataSetChanged();
     }
 }
-
-
 
 class NewsHolder extends RecyclerView.ViewHolder{
 
@@ -105,4 +99,5 @@ class NewsHolder extends RecyclerView.ViewHolder{
 
     }
 }
+
 

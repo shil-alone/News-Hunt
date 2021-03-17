@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="7dp"
+    android:background="@drawable/news_background">
+
+
+    <TextView
+        android:id="@+id/txtSourceTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="4dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/brawler"
+        android:maxLines="2"
+        android:text="this is title"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnVisit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVisit"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="visit site"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="5dp"
+        />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="this is description"
+        android:gravity="center"
+        android:fontFamily="@font/brawler"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSourceTitle"
+        android:layout_marginTop="12dp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescription">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/bubbler_one"
+            android:text="Country : "
+            android:textStyle="bold"
+            android:textColor="#191818"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+        <TextView
+            android:id="@+id/txtCon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/bubbler_one"
+            android:text="India"
+            android:textColor="#191818"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/bubbler_one"
+            android:text="Category : "
+            android:textColor="#191818"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+        <TextView
+            android:id="@+id/txtCat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/bubbler_one"
+            android:text="Sports"
+            android:textColor="#191818"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/bubbler_one"
+            android:text="Language : "
+            android:textColor="#191818"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+        <TextView
+            android:id="@+id/txtLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/bubbler_one"
+            android:text="Hindi"
+            android:textColor="#191818"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

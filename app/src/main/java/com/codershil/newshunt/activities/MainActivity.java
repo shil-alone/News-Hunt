@@ -22,7 +22,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.codershil.newshunt.adapters.SourceAdapter;
 import com.codershil.newshunt.data.MyDbHandler;
+import com.codershil.newshunt.interfaces.SourceItemClicked;
+import com.codershil.newshunt.models.Source;
 import com.codershil.newshunt.singleTons.MySingleTon;
 import com.codershil.newshunt.models.News;
 import com.codershil.newshunt.adapters.NewsAdapter;
@@ -36,22 +39,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NewsItemClicked {
+public class MainActivity extends AppCompatActivity implements NewsItemClicked, SourceItemClicked {
 
     public static String countryCode;
     private static String url ;
     private static String category = "general";
+    public static int isNews = 1;
 
     ArrayList<News> newsList = new ArrayList<>() ;
+    ArrayList<Source> sourceList = new ArrayList<>() ;
     ArrayList<News> savedNewsList = new ArrayList<>() ;
     RecyclerView newsRecyclerView ;
     NewsAdapter newsAdapter = new NewsAdapter(this) ;
+    SourceAdapter sourceAdapter = new SourceAdapter(this) ;
     ProgressBar mProgressBar;
     TextView txtCategory ;
 
     MyDbHandler db = new MyDbHandler(MainActivity.this);
     SavedNews mSavedNews = new SavedNews();
-
     SharedPreferences mPreferences ;
 
     // implementing activity lifecycle methods
@@ -79,17 +84,19 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         setCategoryFragment();
 
         // here we are loading data into recyclerView
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
-        newsRecyclerView.setLayoutManager(layoutManager);
-        newsRecyclerView.setAdapter(newsAdapter);
         loadNews();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        changeTitle();
-        loadNews();
+        if (isNews == 1) {
+            changeTitle();
+            loadNews();
+        }
+        else {
+            loadSources();
+        }
     }
 
     @Override
@@ -101,7 +108,9 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
 
     // fetching news data from the api using volley
     public void loadNews(){
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        newsRecyclerView.setLayoutManager(layoutManager);
+        newsRecyclerView.setAdapter(newsAdapter);
         setUrl();
         mProgressBar.setVisibility(View.VISIBLE);
         newsList.clear();
@@ -138,6 +147,53 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
             }
         }) ;
 
+        MySingleTon.getInstance(this).addToRequestQue(newsRequest);
+    }
+
+    // fetching source data from the api using volley
+    public void loadSources(){
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        newsRecyclerView.setLayoutManager(layoutManager);
+        newsRecyclerView.setAdapter(sourceAdapter);
+
+        setUrl();
+        mProgressBar.setVisibility(View.VISIBLE);
+        sourceList.clear();
+        JsonObjectRequest newsRequest = new JsonObjectRequest(Request.Method.GET, "https://saurav.tech/NewsAPI/sources.json", null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String name, description, url ,category,language,country ;
+                    JSONArray newsJsonArray = response.getJSONArray("sources");
+                    for (int i = 0 ;i<newsJsonArray.length();i++){
+
+                        JSONObject newsJsonObject = newsJsonArray.getJSONObject(i);
+                        name = newsJsonObject.getString("name");
+                        description = newsJsonObject.getString("description");
+                        url = newsJsonObject.getString("url");
+                        category = newsJsonObject.getString("category");
+                        language = newsJsonObject.getString("language");
+                        country = newsJsonObject.getString("country");
+                        sourceList.add(new Source(name,description,url,category,language,country));
+                    }
+                    sourceAdapter.updateSource(sourceList);
+                    newsRecyclerView.scrollToPosition(0);
+                    mProgressBar.setVisibility(View.GONE);
+                }
+
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mProgressBar.setVisibility(View.GONE);
+                error.printStackTrace();
+                Toast.makeText(MainActivity.this, "check your internet and restart app", Toast.LENGTH_SHORT).show();
+            }
+        }) ;
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
     }
 
@@ -194,6 +250,14 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
         db.addNews(item);
         savedNewsList = db.getAllNews();
         Toast.makeText(MainActivity.this, "News Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void sourceItemClicked(Source source) {
+        String url = source.getUrl();
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 
     public void setCategoryFragment(){
@@ -269,6 +333,9 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
             case "cnn":
                 txtCategory.setText("Category : CNN News");
                 break;
+            case "sources":
+                txtCategory.setText("Category : Sources");
+                break;
         }
     }
 
@@ -294,5 +361,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked {
     public static void setCategory(String cat){
         category = cat ;
     }
+
 
 }
