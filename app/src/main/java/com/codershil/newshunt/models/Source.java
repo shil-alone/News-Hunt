@@ -7,6 +7,7 @@ public class Source {
     private String category ;
     private String language ;
     private String country;
+    private int id;
 
     public Source(String name, String description, String url, String category, String language, String country) {
         this.name = name;
@@ -16,6 +17,8 @@ public class Source {
         this.language = language;
         this.country = country;
     }
+    public Source(){}
+
 
     public String getName() {
         return name;
@@ -63,5 +66,13 @@ public class Source {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.codershil.newshunt.adapters.SourceAdapter;
 import com.codershil.newshunt.data.MyDbHandler;
+import com.codershil.newshunt.data.SourceDatabaseHandler;
 import com.codershil.newshunt.interfaces.SourceItemClicked;
 import com.codershil.newshunt.models.Source;
 import com.codershil.newshunt.singleTons.MySingleTon;
@@ -39,7 +40,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NewsItemClicked, SourceItemClicked {
+public class MainActivity extends AppCompatActivity implements NewsItemClicked,SourceItemClicked{
 
     public static String countryCode;
     private static String url ;
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked, 
     ArrayList<News> newsList = new ArrayList<>() ;
     ArrayList<Source> sourceList = new ArrayList<>() ;
     ArrayList<News> savedNewsList = new ArrayList<>() ;
+    ArrayList<Source> savedSourcesList = new ArrayList<>() ;
+
+
     RecyclerView newsRecyclerView ;
     NewsAdapter newsAdapter = new NewsAdapter(this) ;
     SourceAdapter sourceAdapter = new SourceAdapter(this) ;
@@ -56,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked, 
     TextView txtCategory ;
 
     MyDbHandler db = new MyDbHandler(MainActivity.this);
+    SourceDatabaseHandler sourceDb = new SourceDatabaseHandler(MainActivity.this);
     SavedNews mSavedNews = new SavedNews();
+    SavedSources mSavedSources = new SavedSources();
     SharedPreferences mPreferences ;
 
     // implementing activity lifecycle methods
@@ -217,6 +223,11 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked, 
             Intent intent = new Intent(MainActivity.this, SavedNews.class);
             startActivity(intent);
         }
+        else if (item.getItemId() == R.id.savedSource){
+            mSavedSources.getFullSources(sourceDb);
+            Intent intent = new Intent(MainActivity.this, SavedSources.class);
+            startActivity(intent);
+        }
         else if (item.getItemId() == R.id.settings){
             Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);
@@ -258,6 +269,18 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked, 
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(this, Uri.parse(url));
+    }
+
+    @Override
+    public void sourceSaveButtonClicked(Source source) {
+        sourceDb.addSource(source);
+        savedSourcesList = sourceDb.getAllSources();
+        Toast.makeText(MainActivity.this, "Source Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void sourceDeleteButtonClicked(Source source, int position) {
+
     }
 
     public void setCategoryFragment(){

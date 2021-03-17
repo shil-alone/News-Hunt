@@ -11,8 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsHunt">
-        <activity android:name=".activities.Settings" android:parentActivityName=".activities.MainActivity"/>
-        <activity android:name=".activities.SavedNews" android:parentActivityName=".activities.MainActivity" />
+
+        <activity android:name=".activities.SavedSources"
+            android:parentActivityName=".activities.MainActivity"/>
+
+        <activity
+            android:name=".activities.Settings"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.SavedNews"
+            android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.Countries">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

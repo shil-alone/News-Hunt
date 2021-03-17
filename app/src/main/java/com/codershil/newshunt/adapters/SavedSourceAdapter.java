@@ -13,40 +13,40 @@ import com.codershil.newshunt.interfaces.SourceItemClicked;
 import com.codershil.newshunt.models.Source;
 import java.util.ArrayList;
 
-public class SourceAdapter extends RecyclerView.Adapter<SourceHolder> {
+public class SavedSourceAdapter extends RecyclerView.Adapter<SavedSourceHolder> {
 
     ArrayList<Source> sourceList = new ArrayList<>();
     SourceItemClicked listener ;
 
-    public SourceAdapter(SourceItemClicked listener) {
+    public SavedSourceAdapter(SourceItemClicked listener) {
         this.listener = listener;
     }
 
 
     @NonNull
     @Override
-    public SourceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.source_item, parent, false);
-        SourceHolder sourceHolder = new SourceHolder(view);
+    public SavedSourceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_source_item, parent, false);
+        SavedSourceHolder sourceHolder = new SavedSourceHolder(view);
         Button btnVisit = sourceHolder.btnVisit;
-        ImageView btnSaveSource = sourceHolder.btnSaveSource;
+        ImageView btnDeleteSource = sourceHolder.btnDeleteSource;
         btnVisit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.sourceItemClicked(sourceList.get(sourceHolder.getAdapterPosition()));
-                }
-            });
-        btnSaveSource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.sourceSaveButtonClicked(sourceList.get(sourceHolder.getAdapterPosition()));
+                listener.sourceItemClicked(sourceList.get(sourceHolder.getAdapterPosition()));
+            }
+        });
+        btnDeleteSource.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.sourceDeleteButtonClicked(sourceList.get(sourceHolder.getAdapterPosition()),sourceHolder.getAdapterPosition());
             }
         });
         return sourceHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SourceHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SavedSourceHolder holder, int position) {
         Source source = sourceList.get(position);
         holder.txtLanguage.setText(source.getLanguage());
         holder.txtCat.setText(source.getCategory());
@@ -67,12 +67,12 @@ public class SourceAdapter extends RecyclerView.Adapter<SourceHolder> {
     }
 }
 
-class SourceHolder extends RecyclerView.ViewHolder{
+class SavedSourceHolder extends RecyclerView.ViewHolder{
 
     TextView txtSourceTitle ,txtDescription , txtCon,txtCat,txtLanguage;
     Button btnVisit;
-    ImageView btnSaveSource ;
-    public SourceHolder(@NonNull View itemView) {
+    ImageView btnDeleteSource ;
+    public SavedSourceHolder(@NonNull View itemView) {
         super(itemView);
         txtSourceTitle = itemView.findViewById(R.id.txtSourceTitle);
         txtDescription = itemView.findViewById(R.id.txtDescription);
@@ -80,6 +80,6 @@ class SourceHolder extends RecyclerView.ViewHolder{
         txtCat = itemView.findViewById(R.id.txtCat);
         txtLanguage = itemView.findViewById(R.id.txtLanguage);
         btnVisit = itemView.findViewById(R.id.btnVisit);
-        btnSaveSource = itemView.findViewById(R.id.btnSaveSource);
+        btnDeleteSource = itemView.findViewById(R.id.btnDeleteSource);
     }
 }
