@@ -16,8 +16,6 @@ import com.codershil.newshunt.data.MyDbHandler;
 import com.codershil.newshunt.interfaces.NewsItemClicked;
 import com.codershil.newshunt.models.News;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 

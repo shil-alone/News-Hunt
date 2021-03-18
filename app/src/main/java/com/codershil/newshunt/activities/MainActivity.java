@@ -218,19 +218,23 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.savedNews){
-            mSavedNews.getFullNews(db);
-            Intent intent = new Intent(MainActivity.this, SavedNews.class);
-            startActivity(intent);
-        }
-        else if (item.getItemId() == R.id.savedSource){
-            mSavedSources.getFullSources(sourceDb);
-            Intent intent = new Intent(MainActivity.this, SavedSources.class);
-            startActivity(intent);
-        }
-        else if (item.getItemId() == R.id.settings){
-            Intent intent = new Intent(MainActivity.this, Settings.class);
-            startActivity(intent);
+
+        switch (item.getItemId()){
+            case R.id.weather:
+                Intent intent = new Intent(MainActivity.this, Weather.class);
+                startActivity(intent);
+                break;
+            case R.id.savedNews:
+                mSavedNews.getFullNews(db);
+                startActivity(new Intent(MainActivity.this, SavedNews.class));
+                break;
+            case R.id.savedSource:
+                mSavedSources.getFullSources(sourceDb);
+                startActivity(new Intent(MainActivity.this, SavedSources.class));
+                break;
+            case R.id.settings:
+                startActivity(new Intent(MainActivity.this, Settings.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,0 +1,218 @@
+package com.codershil.newshunt.activities;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.codershil.newshunt.R;
+import com.codershil.newshunt.singleTons.MySingleTon;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+public class Weather extends AppCompatActivity {
+
+    private LocationManager mLocationManager;
+    public static final int REQUEST_LOCATION = 1;
+
+    Geocoder geocoder;
+    List<Address> addresses ;
+
+    TextView txtLocation, txtTemperature, txtDesc, txtHumidity, txtTempMax,
+            txtTempMin, txtWind, txtPressure, txtSeaLevel, txtGndLevel;
+    double latitude = 21.164229913687013;
+    double longitude = 21.164229913687013;
+
+    private String key = "debc049655f451f4f21a64ff3c0a6eee";
+    private String baseUrl = "http://api.openweathermap.org/data/2.5/weather?lat=21.164229913687013&lon=21.164229913687013&units=metric&appid=debc049655f451f4f21a64ff3c0a6eee";
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_weather);
+        initializeViews();
+        getSupportActionBar().setTitle("Weather");
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        // checking for location permission
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // requesting location
+           ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_LOCATION);
+           ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_LOCATION);
+        }
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // check if gps is on or not
+        if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            onGPS();
+        }
+        else {
+            //gps is already on
+            getLocation();
+            try {
+                addresses = geocoder.getFromLocation(latitude,longitude,1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String city = addresses.get(0).getLocality();
+            txtLocation.setText("Location : "+ city);
+        }
+
+        loadWeather();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getLocation();
+    }
+
+    private void getLocation() {
+        //check permission again
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // requesting location
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_LOCATION);
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_LOCATION);
+
+        }
+        else {
+            Location locationGps = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location locationNetwork = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Location locationPassive = mLocationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+            if (locationGps!= null){
+                latitude = locationGps.getLatitude();
+                longitude = locationGps.getLongitude();
+            }
+            else if (locationNetwork!= null){
+                latitude = locationNetwork.getLatitude();
+                longitude = locationNetwork.getLongitude();
+
+            }
+            else if (locationPassive!= null){
+                latitude = locationPassive.getLatitude();
+                longitude = locationPassive.getLongitude();
+            }
+            else {
+                Toast.makeText(this, "cannot get your location !", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+    private void onGPS() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this) ;
+        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+    //actual function to load weather
+    public void loadWeather(){
+        StringRequest weatherRequest = new StringRequest(Request.Method.GET, baseUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    String description ,temperature,tempMin,tempMax,humidity,windSpeed,pressure,seaLevel,gndLevel;
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray weatherArray = jsonResponse.getJSONArray("weather");
+                    JSONObject weatherObject = weatherArray.getJSONObject(0);
+                    description = weatherObject.getString("description");
+
+                    JSONObject mainObj = jsonResponse.getJSONObject("main");
+
+                    temperature= mainObj.getString("temp");
+                    tempMin= mainObj.getString("temp_min");
+                    tempMax= mainObj.getString("temp_max");
+                    pressure= mainObj.getString("pressure");
+                    humidity= mainObj.getString("humidity");
+                    seaLevel= mainObj.getString("sea_level");
+                    gndLevel= mainObj.getString("grnd_level");
+
+                    JSONObject wind = jsonResponse.getJSONObject("wind");
+                    windSpeed = wind.getString("speed");
+
+                    txtDesc.setText("Description : "+description);
+                    txtTemperature.setText("Temperature : "+temperature+" °C");
+                    txtTempMin.setText("Temp Min. : "+tempMin+" °C");
+                    txtTempMax.setText("Temp Max. : "+tempMax+" °C");
+                    txtPressure.setText("Pressure : "+pressure+" hPa");
+                    txtHumidity.setText("Humidity : "+humidity +" %");
+                    txtSeaLevel.setText("Sea Level : "+seaLevel+" hPa");
+                    txtGndLevel.setText("Ground Level : "+gndLevel+" hPa");
+                    txtWind.setText("Wind Speed : "+windSpeed+" m/s");
+
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(Weather.this, "check your internet and restart app", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        MySingleTon.getInstance(Weather.this).addToRequestQue(weatherRequest);
+
+    }
+
+    public void initializeViews(){
+        txtLocation = findViewById(R.id.txtLocation);
+        txtTemperature = findViewById(R.id.txtTemperature);
+        txtDesc = findViewById(R.id.txtDesc);
+        txtHumidity = findViewById(R.id.txtHumidity);
+        txtTempMax = findViewById(R.id.txtTempMax);
+        txtTempMin = findViewById(R.id.txtTempMin);
+        txtWind = findViewById(R.id.txtWind);
+        txtPressure = findViewById(R.id.txtPressure);
+        txtSeaLevel = findViewById(R.id.txtSeaLevel);
+        txtGndLevel = findViewById(R.id.txtGndLevel);
+    }
+
+
+}
