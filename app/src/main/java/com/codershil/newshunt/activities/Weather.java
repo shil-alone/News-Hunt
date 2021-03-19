@@ -15,6 +15,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,12 +44,14 @@ public class Weather extends AppCompatActivity {
     List<Address> addresses ;
 
     TextView txtLocation, txtTemperature, txtDesc, txtHumidity, txtTempMax,
-            txtTempMin, txtWind, txtPressure, txtSeaLevel, txtGndLevel;
-    double latitude = 21.164229913687013;
-    double longitude = 21.164229913687013;
+            txtTempMin, txtWind, txtPressure, txtWindDegree, txtClouds;
+    ProgressBar mProgressBar;
+    double latitude = 79.1;
+    double longitude = 21.15;
+    String city ;
 
     private String key = "debc049655f451f4f21a64ff3c0a6eee";
-    private String baseUrl = "http://api.openweathermap.org/data/2.5/weather?lat=21.164229913687013&lon=21.164229913687013&units=metric&appid=debc049655f451f4f21a64ff3c0a6eee";
+    private String baseUrl ;
 
 
     @Override
@@ -81,8 +85,9 @@ public class Weather extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String city = addresses.get(0).getLocality();
+            city = addresses.get(0).getLocality();
             txtLocation.setText("Location : "+ city);
+            baseUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=debc049655f451f4f21a64ff3c0a6eee";
         }
 
         loadWeather();
@@ -92,6 +97,7 @@ public class Weather extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getLocation();
+        loadWeather();
     }
 
     private void getLocation() {
@@ -118,14 +124,13 @@ public class Weather extends AppCompatActivity {
             else if (locationNetwork!= null){
                 latitude = locationNetwork.getLatitude();
                 longitude = locationNetwork.getLongitude();
-
             }
             else if (locationPassive!= null){
                 latitude = locationPassive.getLatitude();
                 longitude = locationPassive.getLongitude();
             }
             else {
-                Toast.makeText(this, "cannot get your location !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Unable to get your location !", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -151,11 +156,12 @@ public class Weather extends AppCompatActivity {
 
     //actual function to load weather
     public void loadWeather(){
+        mProgressBar.setVisibility(View.VISIBLE);
         StringRequest weatherRequest = new StringRequest(Request.Method.GET, baseUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    String description ,temperature,tempMin,tempMax,humidity,windSpeed,pressure,seaLevel,gndLevel;
+                    String description ,temperature,tempMin,tempMax,humidity,windSpeed,pressure,windDegree,clouds;
                     JSONObject jsonResponse = new JSONObject(response);
                     JSONArray weatherArray = jsonResponse.getJSONArray("weather");
                     JSONObject weatherObject = weatherArray.getJSONObject(0);
@@ -168,11 +174,15 @@ public class Weather extends AppCompatActivity {
                     tempMax= mainObj.getString("temp_max");
                     pressure= mainObj.getString("pressure");
                     humidity= mainObj.getString("humidity");
-                    seaLevel= mainObj.getString("sea_level");
-                    gndLevel= mainObj.getString("grnd_level");
 
                     JSONObject wind = jsonResponse.getJSONObject("wind");
                     windSpeed = wind.getString("speed");
+                    windDegree = wind.getString("deg");
+
+                    JSONObject cloudsObj = jsonResponse.getJSONObject("clouds");
+                    clouds =cloudsObj.getString("all");
+
+
 
                     txtDesc.setText("Description : "+description);
                     txtTemperature.setText("Temperature : "+temperature+" °C");
@@ -180,9 +190,11 @@ public class Weather extends AppCompatActivity {
                     txtTempMax.setText("Temp Max. : "+tempMax+" °C");
                     txtPressure.setText("Pressure : "+pressure+" hPa");
                     txtHumidity.setText("Humidity : "+humidity +" %");
-                    txtSeaLevel.setText("Sea Level : "+seaLevel+" hPa");
-                    txtGndLevel.setText("Ground Level : "+gndLevel+" hPa");
                     txtWind.setText("Wind Speed : "+windSpeed+" m/s");
+                    txtWindDegree.setText("Wind Degree : "+windDegree);
+                    txtClouds.setText("Clouds : "+clouds);
+
+                    mProgressBar.setVisibility(View.GONE);
 
                 }
                 catch (JSONException e) {
@@ -193,6 +205,7 @@ public class Weather extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                mProgressBar.setVisibility(View.GONE);
                 Toast.makeText(Weather.this, "check your internet and restart app", Toast.LENGTH_SHORT).show();
             }
         });
@@ -210,8 +223,9 @@ public class Weather extends AppCompatActivity {
         txtTempMin = findViewById(R.id.txtTempMin);
         txtWind = findViewById(R.id.txtWind);
         txtPressure = findViewById(R.id.txtPressure);
-        txtSeaLevel = findViewById(R.id.txtSeaLevel);
-        txtGndLevel = findViewById(R.id.txtGndLevel);
+        txtWindDegree = findViewById(R.id.txtWindDegree);
+        txtClouds = findViewById(R.id.txtClouds);
+        mProgressBar = findViewById(R.id.progressBar2);
     }
 
 
