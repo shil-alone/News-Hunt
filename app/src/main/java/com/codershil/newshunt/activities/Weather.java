@@ -191,7 +191,7 @@ public class Weather extends AppCompatActivity {
                     txtPressure.setText("Pressure : "+pressure+" hPa");
                     txtHumidity.setText("Humidity : "+humidity +" %");
                     txtWind.setText("Wind Speed : "+windSpeed+" m/s");
-                    txtWindDegree.setText("Wind Degree : "+windDegree);
+                    txtWindDegree.setText("Wind Degree : "+windDegree+" °");
                     txtClouds.setText("Clouds : "+clouds);
 
                     mProgressBar.setVisibility(View.GONE);

@@ -4,8 +4,9 @@
 
     <item
         android:id="@+id/weather"
+        android:icon="@drawable/clouds"
         android:title="Weather"
-        app:showAsAction="never" />
+        app:showAsAction="always|withText" />
     <item
         android:id="@+id/savedNews"
         android:title="Saved News"
