@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.codershil.newshunt.R;
+import com.codershil.newshunt.keys.Keys;
 import com.codershil.newshunt.singleTons.MySingleTon;
 
 import org.json.JSONArray;
@@ -49,10 +50,7 @@ public class Weather extends AppCompatActivity {
     double latitude = 79.1;
     double longitude = 21.15;
     String city ;
-
-    private String key = "debc049655f451f4f21a64ff3c0a6eee";
     private String baseUrl ;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +85,7 @@ public class Weather extends AppCompatActivity {
             }
             city = addresses.get(0).getLocality();
             txtLocation.setText("Location : "+ city);
-            baseUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=debc049655f451f4f21a64ff3c0a6eee";
+            baseUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid="+ Keys.getWeatherKey()+"\"";
         }
 
         loadWeather();
