@@ -13,8 +13,8 @@ import com.codershil.newshunt.R;
 public class Countries extends AppCompatActivity implements View.OnClickListener {
 
     /**
-     * COUNTRY_KEY is the key for save the data in the sharedPreferences
-     * isCountrySelected is the variable to directly move to the next acitivity
+     * COUNTRY_KEY : key for save the data in the sharedPreferences
+     * isCountrySelected : variable to directly move to the next activity
      */
     public static String COUNTRY_KEY = "COUNTRY";
     int isCountrySelected = 0 ;
