@@ -1,5 +1,6 @@
 package com.codershil.newshunt.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.codershil.newshunt.R;
@@ -41,6 +44,22 @@ public class SavedNews extends AppCompatActivity implements NewsItemClicked {
         mSavedNewsAdapter.updateNews(newsList);
         getSupportActionBar().setTitle("Saved News");
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.saved_news_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==R.id.deleteAllNews){
+            newsList = db.deleteAllNews();
+            mSavedNewsAdapter.updateNews(newsList);
+            Toast.makeText(this, "All News Deleted", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
     public void getFullNews(MyDbHandler database){

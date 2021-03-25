@@ -93,6 +93,19 @@ public class SourceDatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ArrayList<Source> deleteAllSources(){
+        ArrayList<Source> sourceList = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String select = "SELECT * FROM " + SourceParams.TABLE_NAME;
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(select,null);
+        if (cursor.moveToFirst()){
+            do {
+                db.delete(SourceParams.TABLE_NAME,SourceParams.KEY_ID+"=?",new String[]{String.valueOf(cursor.getInt(0))});
+            }while(cursor.moveToNext());
+        }
+        return sourceList;
+    }
+
     public int getCount(){
         String query = "SELECT * FROM " + SourceParams.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();

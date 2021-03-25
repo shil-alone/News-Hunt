@@ -389,5 +389,4 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         category = cat ;
     }
 
-
 }

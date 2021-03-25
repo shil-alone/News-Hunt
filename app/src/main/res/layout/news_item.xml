@@ -5,17 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/news_background">
+    android:background="@drawable/news_background"
+    android:layout_marginBottom="3dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/otherWeather"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="15dp"
-        android:layout_margin="11dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="6dp"
         app:cardBackgroundColor="@color/white"
         app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

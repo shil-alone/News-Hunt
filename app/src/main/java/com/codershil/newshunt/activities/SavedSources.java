@@ -1,5 +1,6 @@
 package com.codershil.newshunt.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.codershil.newshunt.R;
@@ -41,6 +44,22 @@ public class SavedSources extends AppCompatActivity implements SourceItemClicked
         mSavedSourceAdapter.updateSource(sourceList);
         getSupportActionBar().setTitle("Saved Sources");
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.saved_source_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==R.id.deleteAllSources){
+            sourceList = db.deleteAllSources();
+            mSavedSourceAdapter.updateSource(sourceList);
+            Toast.makeText(this, "All Sources Deleted", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
     public void getFullSources(SourceDatabaseHandler database){

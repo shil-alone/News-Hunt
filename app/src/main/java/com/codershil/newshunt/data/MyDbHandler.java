@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.codershil.newshunt.models.News;
 import com.codershil.newshunt.params.Params;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyDbHandler extends SQLiteOpenHelper {
@@ -95,6 +96,19 @@ public class MyDbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Params.TABLE_NAME,Params.KEY_ID+"=?",new String[]{String.valueOf(news.getId())});
         db.close();
+    }
+
+    public ArrayList<News> deleteAllNews(){
+        ArrayList<News> newsList = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String select = "SELECT * FROM " + Params.TABLE_NAME;
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(select,null);
+        if (cursor.moveToFirst()){
+            do {
+                db.delete(Params.TABLE_NAME,Params.KEY_ID+"=?",new String[]{String.valueOf(cursor.getInt(0))});
+            }while(cursor.moveToNext());
+        }
+        return newsList;
     }
 
     public int getCount(){

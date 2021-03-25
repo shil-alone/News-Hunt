@@ -85,7 +85,7 @@ public class Weather extends AppCompatActivity {
             }
             city = addresses.get(0).getLocality();
             txtLocation.setText("Location : "+ city);
-            baseUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid="+ Keys.getWeatherKey()+"\"";
+            baseUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid="+ Keys.getWeatherKey();
         }
 
         loadWeather();
