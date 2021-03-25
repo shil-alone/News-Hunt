@@ -9,7 +9,6 @@
     android:layout_marginBottom="3dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/otherWeather"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardElevation="4dp"
@@ -26,6 +25,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/imgProgressBar2"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/img_news"
+                app:layout_constraintBottom_toBottomOf="@id/img_news"
+                app:layout_constraintLeft_toLeftOf="@id/img_news"
+                app:layout_constraintRight_toRightOf="@id/img_news"/>
 
 
     <TextView

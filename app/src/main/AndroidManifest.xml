@@ -16,22 +16,22 @@
         android:theme="@style/Theme.NewsHunt">
 
         <activity android:name=".activities.Weather"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.MainActivity">
         </activity>
 
         <activity
             android:name=".activities.SavedSources"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.MainActivity"/>
         <activity
             android:name=".activities.Settings"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.MainActivity"/>
         <activity
             android:name=".activities.SavedNews"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.MainActivity"/>
 
         <activity android:name=".activities.Countries"
             android:screenOrientation="portrait">

@@ -13,6 +13,11 @@ import com.codershil.newshunt.activities.MainActivity;
 
 public class SettingFragment extends PreferenceFragmentCompat {
 
+    /**
+     * COUNTRY_LIST_KEY : an key for country list defined in the settings layout
+     * mPreferenceChangeListener : SharedPreferences.OnSharedPreferenceChangeListener object
+     * mPreferences : SharedPreference object
+     */
     public static final String COUNTRY_LIST_KEY = "countries_list";
     private SharedPreferences.OnSharedPreferenceChangeListener mPreferenceChangeListener ;
     SharedPreferences mPreferences ;
@@ -21,6 +26,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_pref);
 
+        // it is called when we change the country from the list preferences
         mPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

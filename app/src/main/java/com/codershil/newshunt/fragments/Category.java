@@ -15,6 +15,7 @@ import com.codershil.newshunt.R;
 
 public class Category extends Fragment implements View.OnClickListener {
 
+    // declaring views
     Button btnEntertainment, bntGeneral ,btnBusiness, btnSports, btnScience, btnTechnology, btnHealth;
     Button btnBbcNews , btnCnn , btnFoxNews , btnGoogleNews;
     Button btnSource;
@@ -35,6 +36,7 @@ public class Category extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    // initialize the views
     private void intializeViews(View view) {
         btnEntertainment = view.findViewById(R.id.btnEntertainment);
         bntGeneral = view.findViewById(R.id.btnGeneral);
@@ -50,6 +52,7 @@ public class Category extends Fragment implements View.OnClickListener {
         btnGoogleNews = view.findViewById(R.id.btnGoogleNews);
         btnSource = view.findViewById(R.id.btnSource);
     }
+    // setting onClickListeners
     private void setClickListners(){
         bntGeneral.setOnClickListener(this);
         btnEntertainment.setOnClickListener(this);
@@ -65,7 +68,7 @@ public class Category extends Fragment implements View.OnClickListener {
         btnSource.setOnClickListener(this);
     }
 
-
+    // calling loadNews,changeText method of mainActivity from category fragment
     @Override
     public void onClick(View v) {
         switch (v.getId()){

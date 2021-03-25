@@ -37,20 +37,27 @@ import java.util.List;
 import java.util.Locale;
 
 public class Weather extends AppCompatActivity {
+    /**
+     * lacation manager : get the location of the user
+     * geocoder : address using the latitude and longitude
+     * address : list of address object
+     * baseUrl : base url of api
+     */
 
     private LocationManager mLocationManager;
-    public static final int REQUEST_LOCATION = 1;
-
     Geocoder geocoder;
+    public static final int REQUEST_LOCATION = 1;
     List<Address> addresses ;
-
-    TextView txtLocation, txtTemperature, txtDesc, txtHumidity, txtTempMax,
-            txtTempMin, txtWind, txtPressure, txtWindDegree, txtClouds;
-    ProgressBar mProgressBar;
     double latitude = 79.1;
     double longitude = 21.15;
     String city ;
     private String baseUrl ;
+
+    //declaring views
+    TextView txtLocation, txtTemperature, txtDesc, txtHumidity, txtTempMax,
+            txtTempMin, txtWind, txtPressure, txtWindDegree, txtClouds;
+    ProgressBar mProgressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,7 @@ public class Weather extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         initializeViews();
         getSupportActionBar().setTitle("Weather");
+        // initializing the geocoder
         geocoder = new Geocoder(this, Locale.getDefault());
 
         // checking for location permission
@@ -88,6 +96,7 @@ public class Weather extends AppCompatActivity {
             baseUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid="+ Keys.getWeatherKey();
         }
 
+        // will load the weather in into ui
         loadWeather();
     }
 
@@ -98,6 +107,7 @@ public class Weather extends AppCompatActivity {
         loadWeather();
     }
 
+    // this method gets the latitude and longitude using the location
     private void getLocation() {
         //check permission again
 
@@ -134,6 +144,7 @@ public class Weather extends AppCompatActivity {
 
     }
 
+    // allowing user to on the location service
     private void onGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this) ;
         builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -155,6 +166,7 @@ public class Weather extends AppCompatActivity {
     //actual function to load weather
     public void loadWeather(){
         mProgressBar.setVisibility(View.VISIBLE);
+        // creating stringRequest and parsing the json and loading the data into views
         StringRequest weatherRequest = new StringRequest(Request.Method.GET, baseUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -212,6 +224,7 @@ public class Weather extends AppCompatActivity {
 
     }
 
+    // initializing the views
     public void initializeViews(){
         txtLocation = findViewById(R.id.txtLocation);
         txtTemperature = findViewById(R.id.txtTemperature);

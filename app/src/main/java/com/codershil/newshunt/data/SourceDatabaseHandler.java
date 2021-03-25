@@ -19,12 +19,18 @@ import java.nio.channels.Pipe;
 import java.util.ArrayList;
 
 public class SourceDatabaseHandler extends SQLiteOpenHelper {
+    /**
+     * mContext : context of the activity which will create the database object
+     */
     Context mContext;
+
+    //constructor
     public SourceDatabaseHandler(Context context){
         super(context, SourceParams.DB_NAME,null,SourceParams.DB_VERSION);
         mContext = context;
     }
 
+    // method for creating database with given name
     @Override
     public void onCreate(SQLiteDatabase db) {
         String create = "CREATE TABLE " + SourceParams.TABLE_NAME + "("
@@ -41,6 +47,7 @@ public class SourceDatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    // this method adds the source into the database
     public void addSource(Source source){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -57,13 +64,14 @@ public class SourceDatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    // this method return the list of sources from the database
     public ArrayList<Source> getAllSources(){
         ArrayList<Source> sourceList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         String select = "SELECT * FROM " + SourceParams.TABLE_NAME;
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(select,null);
-
+        // cursor is the pointer to each row in the database
         if (cursor.moveToFirst()){
             do {
                 Source source = new Source();
@@ -81,19 +89,22 @@ public class SourceDatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    // this method deletes the source by using the id
     public void deleteSourceById(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(SourceParams.TABLE_NAME,SourceParams.KEY_ID+"=?",new String[]{String.valueOf(id)});
         db.close();
     }
 
+    // this method deletes the news using source object
     public void deleteSource(Source source){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(SourceParams.TABLE_NAME,Params.KEY_ID+"=?",new String[]{String.valueOf(source.getId())});
         db.close();
     }
 
-    public ArrayList<Source> deleteAllSources(){
+    // it deletes all the source from the database
+    public void deleteAllSources(){
         ArrayList<Source> sourceList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String select = "SELECT * FROM " + SourceParams.TABLE_NAME;
@@ -103,9 +114,9 @@ public class SourceDatabaseHandler extends SQLiteOpenHelper {
                 db.delete(SourceParams.TABLE_NAME,SourceParams.KEY_ID+"=?",new String[]{String.valueOf(cursor.getInt(0))});
             }while(cursor.moveToNext());
         }
-        return sourceList;
     }
 
+    // return the no. of rows in the database
     public int getCount(){
         String query = "SELECT * FROM " + SourceParams.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();

@@ -24,6 +24,13 @@ import java.util.Collections;
 
 public class SavedNews extends AppCompatActivity implements NewsItemClicked {
 
+    /**
+     * db : the news database handler
+     * newsList : a list to store saved news
+     * savedNewsRV : a recyclerview to show saved news
+     * mSavedNewsAdapter : an adapter for recyclerview
+     */
+
     MyDbHandler db = new MyDbHandler(SavedNews.this);
     static ArrayList<News> newsList ;
     RecyclerView savedNewsRV ;
@@ -36,6 +43,7 @@ public class SavedNews extends AppCompatActivity implements NewsItemClicked {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_news);
 
+        // initializing views and setting up layout manager and adapter for recyclerview
         savedNewsRV = findViewById(R.id.savedNewsRV);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         savedNewsRV.setLayoutManager(layoutManager);
@@ -46,28 +54,33 @@ public class SavedNews extends AppCompatActivity implements NewsItemClicked {
 
     }
 
+    // method for creating the menu for savedNews activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.saved_news_menu,menu);
         return true;
     }
 
+    // called when menu item selected
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId()==R.id.deleteAllNews){
-            newsList = db.deleteAllNews();
+            db.deleteAllNews();
+            newsList.clear();
             mSavedNewsAdapter.updateNews(newsList);
             Toast.makeText(this, "All News Deleted", Toast.LENGTH_SHORT).show();
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
+    //  will get all the saved news from the database
     public void getFullNews(MyDbHandler database){
         newsList = database.getAllNews() ;
         db = database ;
     }
 
 
+    // called when newsImage is clicked
     @Override
     public void newsImageClicked(News item) {
         String url = item.getUrl();
@@ -76,6 +89,7 @@ public class SavedNews extends AppCompatActivity implements NewsItemClicked {
         customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 
+    // will share the news using sharing intent
     @Override
     public void shareButtonClicked(News item) {
         String title = item.getTitle();
@@ -86,6 +100,7 @@ public class SavedNews extends AppCompatActivity implements NewsItemClicked {
         startActivity(Intent.createChooser(sharingIntent, "Share this News using"));
     }
 
+    // this will delete the news from the database it takes position of the news in adapter
     @Override
     public void deleteButtonClicked(News item,int position) {
         db.deleteNews(item);
@@ -94,6 +109,7 @@ public class SavedNews extends AppCompatActivity implements NewsItemClicked {
         mSavedNewsAdapter.updateNews(newsList);
     }
 
+    // no implementation in this activity
     @Override
     public void saveButtonClicked(News item) {
 

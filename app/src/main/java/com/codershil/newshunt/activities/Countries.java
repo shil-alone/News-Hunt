@@ -12,12 +12,23 @@ import com.codershil.newshunt.R;
 
 public class Countries extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * COUNTRY_KEY is the key for save the data in the sharedPreferences
+     * isCountrySelected is the variable to directly move to the next acitivity
+     */
     public static String COUNTRY_KEY = "COUNTRY";
     int isCountrySelected = 0 ;
+    //declaring the views
     LinearLayout btnIndia, btnUSA , btnUK , btnAustralia , btnFrance , btnRussia;
 
 
-    // this will sharedPreference file
+    // declaring shared preference object and sharedPreference file name
+    /**
+     * mPreferences : SharedPreference Object
+     * sharePrefFile : name of the shared preference file
+     * isCountry : String holding the key
+     * countryString : a string that holds the country name code
+     */
     SharedPreferences mPreferences ;
     public static String sharedPrefFile = "com.codershil.newshunt.settingPrefs" ;
     public static String isCountry = "isCountrySelected";
@@ -26,6 +37,7 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // getting data from sharedPreferences
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         isCountrySelected = mPreferences.getInt(isCountry,0);
         countryString = mPreferences.getString(COUNTRY_KEY,"in");
@@ -33,12 +45,12 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
             finish();
             startActivity(new Intent(Countries.this,MainActivity.class));
         }
-
         setContentView(R.layout.activity_countries);
         initializeViews();
         applyClicks();
     }
 
+    // initializing the Views
     public void initializeViews(){
         btnIndia = findViewById(R.id.btnIndia);
         btnUSA = findViewById(R.id.btnUSA);
@@ -48,6 +60,7 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
         btnRussia = findViewById(R.id.btnRussia);
     }
 
+    // applying the clicks on the views
     public void applyClicks(){ btnIndia.setOnClickListener(this);
         btnUSA.setOnClickListener(this);
         btnUK.setOnClickListener(this);
@@ -57,9 +70,11 @@ public class Countries extends AppCompatActivity implements View.OnClickListener
     }
 
 
+    // implementing the onClick interface method
     @Override
     public void onClick(View v) {
 
+        //passing the country data from country activity to MainActivity
         SharedPreferences.Editor preferencesEditor = mPreferences.edit() ;
         Intent intent = new Intent(Countries.this, MainActivity.class);
         String country ;

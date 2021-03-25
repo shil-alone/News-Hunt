@@ -17,12 +17,18 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyDbHandler extends SQLiteOpenHelper {
+    /**
+     * mContext : context of the activity which will create the database object
+     */
     Context mContext;
+
+    //constructor
     public MyDbHandler(Context context){
         super(context, Params.DB_NAME,null,Params.DB_VERSION);
         mContext = context;
     }
 
+    // method for creating database with given name
     @Override
     public void onCreate(SQLiteDatabase db) {
         String create = "CREATE TABLE " + Params.TABLE_NAME + "("
@@ -37,6 +43,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
     }
 
+    // this method adds the news into the database
     public void addNews(News news){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -51,6 +58,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
     }
 
 
+    // this method return the list of news from the database
     public ArrayList<News> getAllNews(){
         ArrayList<News> newsList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -58,6 +66,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
         String select = "SELECT * FROM " + Params.TABLE_NAME;
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(select,null);
 
+        // cursor is the pointer to each row in the database
         if (cursor.moveToFirst()){
             do {
                 News news  = new News();
@@ -73,6 +82,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
     }
 
 
+    // it updates the news at the particular row
     public int updateNews(News news){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -86,20 +96,22 @@ public class MyDbHandler extends SQLiteOpenHelper {
                 ) ;
     }
 
+    // this method deletes the news by using the id
     public void deleteNewsById(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Params.TABLE_NAME,Params.KEY_ID+"=?",new String[]{String.valueOf(id)});
         db.close();
     }
 
+    // this method deletes the news using news object
     public void deleteNews(News news){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Params.TABLE_NAME,Params.KEY_ID+"=?",new String[]{String.valueOf(news.getId())});
         db.close();
     }
 
-    public ArrayList<News> deleteAllNews(){
-        ArrayList<News> newsList = new ArrayList<>();
+    // it deletes all the news from the database
+    public void deleteAllNews(){
         SQLiteDatabase db = this.getWritableDatabase();
         String select = "SELECT * FROM " + Params.TABLE_NAME;
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(select,null);
@@ -108,9 +120,9 @@ public class MyDbHandler extends SQLiteOpenHelper {
                 db.delete(Params.TABLE_NAME,Params.KEY_ID+"=?",new String[]{String.valueOf(cursor.getInt(0))});
             }while(cursor.moveToNext());
         }
-        return newsList;
     }
 
+    // return the no. of rows in the database
     public int getCount(){
         String query = "SELECT * FROM " + Params.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();

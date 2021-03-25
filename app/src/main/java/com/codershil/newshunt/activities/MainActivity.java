@@ -42,27 +42,46 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NewsItemClicked,SourceItemClicked{
 
+
+    /**
+     * countryCode : country code provided by the api eg in,gb,us ,etc
+     * url : an api url
+     * category : news category which will be changed on button click
+     * isNews : indicator for  which method loadNews() or loadSources() to be called onResume()
+     */
     public static String countryCode;
     private static String url ;
     private static String category = "general";
     public static int isNews = 1;
 
+
+    /**
+     * newsList : list of the news objects
+     * sourceList : list of the source objects
+     * savedNewsList : list of news to be saved on sql lite database
+     * savedSourceList : list of source to be saved on sql lite database
+     *
+     */
     ArrayList<News> newsList = new ArrayList<>() ;
     ArrayList<Source> sourceList = new ArrayList<>() ;
     ArrayList<News> savedNewsList = new ArrayList<>() ;
     ArrayList<Source> savedSourcesList = new ArrayList<>() ;
 
-
+    // initializing recyclerView for showing the news and setting up the adapter for news and source
     RecyclerView newsRecyclerView ;
     NewsAdapter newsAdapter = new NewsAdapter(this) ;
     SourceAdapter sourceAdapter = new SourceAdapter(this) ;
+
+    // declaring views
     ProgressBar mProgressBar;
     TextView txtCategory ;
 
+    // declaring database object and other objects for database handling
     MyDbHandler db = new MyDbHandler(MainActivity.this);
     SourceDatabaseHandler sourceDb = new SourceDatabaseHandler(MainActivity.this);
     SavedNews mSavedNews = new SavedNews();
     SavedSources mSavedSources = new SavedSources();
+    //declaring SharedPreferences object to save the country code
     SharedPreferences mPreferences ;
 
     // implementing activity lifecycle methods
@@ -70,16 +89,20 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // initializing views
         newsRecyclerView = findViewById(R.id.recyclerView);
         mProgressBar = findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.VISIBLE);
         txtCategory = findViewById(R.id.txtCategory);
 
+        // initializing preferences
         mPreferences = getSharedPreferences(Countries.sharedPrefFile,MODE_PRIVATE);
 
         // this code is for handling intent coming from country class
         countryCode = mPreferences.getString(Countries.COUNTRY_KEY,"in");
 
+        // saving the url and category in savedInstanceState
         if (savedInstanceState!=null){
             url =savedInstanceState.getString("url");
             txtCategory.setText(savedInstanceState.getString("text"));
@@ -88,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         changeTitle();
         // here we are setting up fragment
         setCategoryFragment();
-
         // here we are loading data into recyclerView
         loadNews();
     }
@@ -114,12 +136,17 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
 
     // fetching news data from the api using volley
     public void loadNews(){
+        /**
+         * linearLayoutManager will help us to arrange the news in the recyclerView like horizontal ,vertical,scattered
+         */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         newsRecyclerView.setLayoutManager(layoutManager);
         newsRecyclerView.setAdapter(newsAdapter);
         setUrl();
         mProgressBar.setVisibility(View.VISIBLE);
         newsList.clear();
+
+        // creating JsonObjectRequest and parsing the data and add the news object to the news object
         JsonObjectRequest newsRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -153,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
             }
         }) ;
 
+        // adding newsRequest to the request queue
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
     }
 
@@ -203,6 +231,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
     }
 
+    // this method is used to store the small amount of data that can be retrieved in the onCreate() method
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString("url",url);
@@ -210,12 +239,14 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         super.onSaveInstanceState(outState);
     }
 
+    // the function to add the menu on actionBar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
 
+    // this method is called when menu item selected
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -239,6 +270,8 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         return super.onOptionsItemSelected(item);
     }
 
+
+    // opening a chrome custom tab for viewing the news using the url in our app
     @Override
     public void newsImageClicked(News item) {
         String url = item.getUrl();
@@ -247,6 +280,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 
+    // this method will share the news by using the sharing intent in text form
     @Override
     public void shareButtonClicked(News item) {
         String title = item.getTitle();
@@ -257,9 +291,11 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         startActivity(Intent.createChooser(sharingIntent, "Share this News using"));
     }
 
+    // this method implementation is empty in MaiActivity class
     @Override
     public void deleteButtonClicked(News item,int position) { }
 
+    // this method saved the news object into the database
     @Override
     public void saveButtonClicked(News item) {
         db.addNews(item);
@@ -267,6 +303,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         Toast.makeText(MainActivity.this, "News Saved", Toast.LENGTH_SHORT).show();
     }
 
+    //this will open the source url in chrome custom tab
     @Override
     public void sourceItemClicked(Source source) {
         String url = source.getUrl();
@@ -275,6 +312,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 
+    // saves the source in source database
     @Override
     public void sourceSaveButtonClicked(Source source) {
         sourceDb.addSource(source);
@@ -282,11 +320,13 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         Toast.makeText(MainActivity.this, "Source Saved", Toast.LENGTH_SHORT).show();
     }
 
+    // method implementation is empty
     @Override
     public void sourceDeleteButtonClicked(Source source, int position) {
 
     }
 
+    // sets the category fragment in linear layout
     public void setCategoryFragment(){
             Category category = new Category();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -294,6 +334,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
             fragmentTransaction.commit();
     }
 
+    // change the title of actionbar
     public void changeTitle(){
 
         SharedPreferences.Editor editor = mPreferences.edit();
@@ -325,6 +366,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         }
     }
 
+    //change the category text
     public void changeText(){
         switch (category) {
             case "general":
@@ -366,6 +408,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         }
     }
 
+    // sets the url according to button click
     public void setUrl(){
         switch (category) {
             case "bbc":
@@ -385,6 +428,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         }
     }
 
+    //set method for category
     public static void setCategory(String cat){
         category = cat ;
     }

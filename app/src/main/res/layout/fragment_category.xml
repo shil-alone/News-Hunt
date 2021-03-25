@@ -29,7 +29,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="general"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -39,7 +41,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="business"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -49,7 +53,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="entertainment"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -59,7 +65,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="sports"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -69,7 +77,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="science"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -79,7 +89,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="technology"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
 
@@ -90,7 +102,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="health"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -100,7 +114,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="BBC News"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -110,7 +126,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="CNN"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -120,7 +138,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="FOX News"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -130,7 +150,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="Google News"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
           <androidx.appcompat.widget.AppCompatButton
@@ -140,7 +162,9 @@
               android:layout_margin="9dp"
               android:layout_weight="1"
               android:background="@drawable/btn_category_background"
+              android:padding="7dp"
               android:text="Get Sources"
+              android:textAlignment="center"
               android:textColor="@color/black" />
 
 
