@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
             }
         });
 
-
         // initializing preferences
         mPreferences = getSharedPreferences(Countries.sharedPrefFile,MODE_PRIVATE);
 
@@ -128,27 +127,46 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         changeTitle();
         // here we are setting up fragment
         setCategoryFragment();
-        // here we are loading data into recyclerView
-        loadNews();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (isNews == 1) {
             changeTitle();
-            loadNews();
-        }
-        else {
-            loadSources();
-        }
+            changeText();
+            if (isNews == 1){
+                loadNews();
+            }
+            else {
+                loadSources();
+            }
+            mPreferences.getString("category","general");
+    }
+
+    @Override
+    protected void onPause() {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString("category",txtCategory.getText().toString());
+        super.onPause();
+    }
+
+    // this method is used to store the small amount of data that can be retrieved in the onCreate() method
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("url",url);
+        outState.putString("text",txtCategory.getText().toString());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         changeTitle();
-        loadNews();
+        if (isNews == 1){
+            loadNews();
+            return;
+        }
+        loadSources();
     }
 
     // fetching news data from the api using volley
@@ -163,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         mProgressBar.setVisibility(View.VISIBLE);
         newsList.clear();
 
-        // creating JsonObjectRequest and parsing the data and add the news object to the news object
+        // creating JsonObjectRequest and parsing the data and add the news object 
         JsonObjectRequest newsRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -211,6 +229,8 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         setUrl();
         mProgressBar.setVisibility(View.VISIBLE);
         sourceList.clear();
+
+        // creating JsonObjectRequest and parsing the data and add the source object
         JsonObjectRequest newsRequest = new JsonObjectRequest(Request.Method.GET, "https://saurav.tech/NewsAPI/sources.json", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -248,13 +268,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
     }
 
-    // this method is used to store the small amount of data that can be retrieved in the onCreate() method
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString("url",url);
-        outState.putString("text",txtCategory.getText().toString());
-        super.onSaveInstanceState(outState);
-    }
 
     // the function to add the menu on actionBar
     @Override
