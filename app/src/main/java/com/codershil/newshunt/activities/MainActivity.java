@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
      * sourceList : list of the source objects
      * savedNewsList : list of news to be saved on sql lite database
      * savedSourceList : list of source to be saved on sql lite database
-     *
      */
     ArrayList<News> newsList = new ArrayList<>() ;
     ArrayList<Source> sourceList = new ArrayList<>() ;

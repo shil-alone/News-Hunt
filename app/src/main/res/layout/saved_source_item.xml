@@ -88,12 +88,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
             android:fontFamily="@font/bubbler_one"
             android:text="Country : "
-            android:textStyle="bold"
             android:textColor="#191818"
             android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 
@@ -101,7 +102,8 @@
             android:id="@+id/txtCon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="0.5"
             android:fontFamily="@font/bubbler_one"
             android:text="India"
             android:textColor="#191818"
@@ -112,12 +114,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:fontFamily="@font/bubbler_one"
             android:text="Category : "
             android:textColor="#191818"
-            android:textStyle="bold"
             android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 
@@ -125,7 +128,8 @@
             android:id="@+id/txtCat"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="0.5"
             android:fontFamily="@font/bubbler_one"
             android:text="Sports"
             android:textColor="#191818"
@@ -136,12 +140,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:fontFamily="@font/bubbler_one"
             android:text="Language : "
             android:textColor="#191818"
-            android:textStyle="bold"
             android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 
@@ -149,7 +154,8 @@
             android:id="@+id/txtLanguage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="0.5"
             android:fontFamily="@font/bubbler_one"
             android:text="Hindi"
             android:textColor="#191818"
