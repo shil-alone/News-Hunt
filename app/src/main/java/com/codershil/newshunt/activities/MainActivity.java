@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     public static String countryCode;
     private static String url ;
     private static String category = "general";
-    public static int isNews = 1;
+    public static byte isNews = 1;
 
 
     /**
