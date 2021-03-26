@@ -92,6 +92,7 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsHolder> {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             holder.imgProgressBar2.setVisibility(View.GONE);
+                            holder.newsImage.setImageResource(R.drawable.no_image);
                             return false;
                         }
 

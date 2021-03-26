@@ -6,6 +6,7 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     // declaring views
     ProgressBar mProgressBar;
     TextView txtCategory ;
+    SwipeRefreshLayout swipeRefreshLayout ;
 
     // declaring database object and other objects for database handling
     MyDbHandler db = new MyDbHandler(MainActivity.this);
@@ -95,6 +97,21 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         mProgressBar = findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.VISIBLE);
         txtCategory = findViewById(R.id.txtCategory);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (isNews == 1){
+                    loadNews();
+                    swipeRefreshLayout.setRefreshing(false);
+                    return;
+                }
+                loadSources();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
         // initializing preferences
         mPreferences = getSharedPreferences(Countries.sharedPrefFile,MODE_PRIVATE);

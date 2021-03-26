@@ -1,4 +1,4 @@
-package com.codershil.newshunt;
+package com.codershil.newshunt.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.codershil.newshunt.activities.Countries;
-import com.codershil.newshunt.activities.MainActivity;
+import com.codershil.newshunt.R;
 
 public class SplashActivity extends AppCompatActivity {
 
