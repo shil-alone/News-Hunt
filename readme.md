@@ -1,4 +1,4 @@
-# Algorithm Visualizer and Doubt Solver
+# News Hunt
 
 [Apk Link](https://drive.google.com/file/d/1-JraJi6bSv0jYzJWmS8SsLHsW_FcKK-v/view)
 
