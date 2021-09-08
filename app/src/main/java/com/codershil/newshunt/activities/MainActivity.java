@@ -41,7 +41,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NewsItemClicked,SourceItemClicked{
+public class MainActivity extends AppCompatActivity implements NewsItemClicked, SourceItemClicked {
 
 
     /**
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
      * isNews : indicator for  which method loadNews() or loadSources() to be called onResume()
      */
     public static String countryCode;
-    private static String url ;
+    private static String url;
     private static String category = "general";
     public static byte isNews = 1;
 
@@ -62,20 +62,20 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
      * savedNewsList : list of news to be saved on sql lite database
      * savedSourceList : list of source to be saved on sql lite database
      */
-    ArrayList<News> newsList = new ArrayList<>() ;
-    ArrayList<Source> sourceList = new ArrayList<>() ;
-    ArrayList<News> savedNewsList = new ArrayList<>() ;
-    ArrayList<Source> savedSourcesList = new ArrayList<>() ;
+    ArrayList<News> newsList = new ArrayList<>();
+    ArrayList<Source> sourceList = new ArrayList<>();
+    ArrayList<News> savedNewsList = new ArrayList<>();
+    ArrayList<Source> savedSourcesList = new ArrayList<>();
 
     // initializing recyclerView for showing the news and setting up the adapter for news and source
-    RecyclerView newsRecyclerView ;
-    NewsAdapter newsAdapter = new NewsAdapter(this) ;
-    SourceAdapter sourceAdapter = new SourceAdapter(this) ;
+    RecyclerView newsRecyclerView;
+    NewsAdapter newsAdapter = new NewsAdapter(this);
+    SourceAdapter sourceAdapter = new SourceAdapter(this);
 
     // declaring views
     ProgressBar mProgressBar;
-    TextView txtCategory ;
-    SwipeRefreshLayout swipeRefreshLayout ;
+    TextView txtCategory;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     // declaring database object and other objects for database handling
     MyDbHandler db = new MyDbHandler(MainActivity.this);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     SavedNews mSavedNews = new SavedNews();
     SavedSources mSavedSources = new SavedSources();
     //declaring SharedPreferences object to save the country code
-    SharedPreferences mPreferences ;
+    SharedPreferences mPreferences;
 
     // implementing activity lifecycle methods
     @Override
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (isNews == 1){
+                if (isNews == 1) {
                     loadNews();
                     swipeRefreshLayout.setRefreshing(false);
                     return;
@@ -112,14 +112,14 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         });
 
         // initializing preferences
-        mPreferences = getSharedPreferences(Countries.sharedPrefFile,MODE_PRIVATE);
+        mPreferences = getSharedPreferences(Countries.sharedPrefFile, MODE_PRIVATE);
 
         // this code is for handling intent coming from country class
-        countryCode = mPreferences.getString(Countries.COUNTRY_KEY,"in");
+        countryCode = mPreferences.getString(Countries.COUNTRY_KEY, "in");
 
         // saving the url and category in savedInstanceState
-        if (savedInstanceState!=null){
-            url =savedInstanceState.getString("url");
+        if (savedInstanceState != null) {
+            url = savedInstanceState.getString("url");
             txtCategory.setText(savedInstanceState.getString("text"));
         }
         // changing the title of action bar
@@ -131,29 +131,28 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     @Override
     protected void onResume() {
         super.onResume();
-            changeTitle();
-            changeText();
-            if (isNews == 1){
-                loadNews();
-            }
-            else {
-                loadSources();
-            }
-            mPreferences.getString("category","general");
+        changeTitle();
+        changeText();
+        if (isNews == 1) {
+            loadNews();
+        } else {
+            loadSources();
+        }
+        mPreferences.getString("category", "general");
     }
 
     @Override
     protected void onPause() {
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString("category",txtCategory.getText().toString());
+        editor.putString("category", txtCategory.getText().toString());
         super.onPause();
     }
 
     // this method is used to store the small amount of data that can be retrieved in the onCreate() method
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString("url",url);
-        outState.putString("text",txtCategory.getText().toString());
+        outState.putString("url", url);
+        outState.putString("text", txtCategory.getText().toString());
         super.onSaveInstanceState(outState);
     }
 
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     protected void onDestroy() {
         super.onDestroy();
         changeTitle();
-        if (isNews == 1){
+        if (isNews == 1) {
             loadNews();
             return;
         }
@@ -169,11 +168,11 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     }
 
     // fetching news data from the api using volley
-    public void loadNews(){
+    public void loadNews() {
         /**
          * linearLayoutManager will help us to arrange the news in the recyclerView like horizontal ,vertical,scattered
          */
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         newsRecyclerView.setLayoutManager(layoutManager);
         newsRecyclerView.setAdapter(newsAdapter);
         setUrl();
@@ -185,23 +184,21 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String title, author, url , urlToImage ;
+                    String title, author, url, urlToImage;
                     JSONArray newsJsonArray = response.getJSONArray("articles");
-                    for (int i = 0 ;i<newsJsonArray.length();i++){
+                    for (int i = 0; i < newsJsonArray.length(); i++) {
 
                         JSONObject newsJsonObject = newsJsonArray.getJSONObject(i);
                         title = newsJsonObject.getString("title");
                         author = newsJsonObject.getString("author");
                         url = newsJsonObject.getString("url");
                         urlToImage = newsJsonObject.getString("urlToImage");
-                        newsList.add(new News(author,title,url,urlToImage));
+                        newsList.add(new News(author, title, url, urlToImage));
                     }
                     newsAdapter.updateNews(newsList);
                     newsRecyclerView.scrollToPosition(0);
                     mProgressBar.setVisibility(View.GONE);
-                }
-
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -212,16 +209,16 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
                 error.printStackTrace();
                 Toast.makeText(MainActivity.this, "check your internet and restart app", Toast.LENGTH_SHORT).show();
             }
-        }) ;
+        });
 
         // adding newsRequest to the request queue
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
     }
 
     // fetching source data from the api using volley
-    public void loadSources(){
+    public void loadSources() {
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         newsRecyclerView.setLayoutManager(layoutManager);
         newsRecyclerView.setAdapter(sourceAdapter);
 
@@ -234,9 +231,9 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String name, description, url ,category,language,country ;
+                    String name, description, url, category, language, country;
                     JSONArray newsJsonArray = response.getJSONArray("sources");
-                    for (int i = 0 ;i<newsJsonArray.length();i++){
+                    for (int i = 0; i < newsJsonArray.length(); i++) {
 
                         JSONObject newsJsonObject = newsJsonArray.getJSONObject(i);
                         name = newsJsonObject.getString("name");
@@ -245,14 +242,12 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
                         category = newsJsonObject.getString("category");
                         language = newsJsonObject.getString("language");
                         country = newsJsonObject.getString("country");
-                        sourceList.add(new Source(name,description,url,category,language,country));
+                        sourceList.add(new Source(name, description, url, category, language, country));
                     }
                     sourceAdapter.updateSource(sourceList);
                     newsRecyclerView.scrollToPosition(0);
                     mProgressBar.setVisibility(View.GONE);
-                }
-
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -263,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
                 error.printStackTrace();
                 Toast.makeText(MainActivity.this, "check your internet and restart app", Toast.LENGTH_SHORT).show();
             }
-        }) ;
+        });
         MySingleTon.getInstance(this).addToRequestQue(newsRequest);
     }
 
@@ -271,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     // the function to add the menu on actionBar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -279,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.weather:
                 Intent intent = new Intent(MainActivity.this, Weather.class);
                 startActivity(intent);
@@ -315,14 +310,15 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
         String title = item.getTitle();
         String url = item.getUrl();
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, title + "\n link to news post : "+url);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, title + "\n link to news post : " + url);
         sharingIntent.setType("text/plain");
         startActivity(Intent.createChooser(sharingIntent, "Share this News using"));
     }
 
     // this method implementation is empty in MaiActivity class
     @Override
-    public void deleteButtonClicked(News item,int position) { }
+    public void deleteButtonClicked(News item, int position) {
+    }
 
     // this method saved the news object into the database
     @Override
@@ -356,18 +352,18 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     }
 
     // sets the category fragment in linear layout
-    public void setCategoryFragment(){
-            Category category = new Category();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_linear_layout, category);
-            fragmentTransaction.commit();
+    public void setCategoryFragment() {
+        Category category = new Category();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_linear_layout, category);
+        fragmentTransaction.commit();
     }
 
     // change the title of actionbar
-    public void changeTitle(){
+    public void changeTitle() {
 
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(Countries.COUNTRY_KEY,countryCode);
+        editor.putString(Countries.COUNTRY_KEY, countryCode);
         editor.apply();
 
         switch (countryCode) {
@@ -396,7 +392,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     }
 
     //change the category text
-    public void changeText(){
+    public void changeText() {
         switch (category) {
             case "general":
                 txtCategory.setText("Category : General");
@@ -438,7 +434,7 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
     }
 
     // sets the url according to button click
-    public void setUrl(){
+    public void setUrl() {
         switch (category) {
             case "bbc":
                 url = "https://saurav.tech/NewsAPI/everything/bbc-news.json";
@@ -453,13 +449,13 @@ public class MainActivity extends AppCompatActivity implements NewsItemClicked,S
                 url = "https://saurav.tech/NewsAPI/everything/google-news.json";
                 break;
             default:
-                url = "https://saurav.tech/NewsAPI/top-headlines/category/"+category+ "/"+countryCode+".json";
+                url = "https://saurav.tech/NewsAPI/top-headlines/category/" + category + "/" + countryCode + ".json";
         }
     }
 
     //set method for category
-    public static void setCategory(String cat){
-        category = cat ;
+    public static void setCategory(String cat) {
+        category = cat;
     }
 
 }

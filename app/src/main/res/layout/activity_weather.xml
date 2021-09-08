@@ -19,91 +19,93 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/weatherCV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="7dp"
-        app:cardCornerRadius="10dp"
-        android:layout_margin="5dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardMaxElevation="4dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="15sp">
-
-            <ImageView
-                android:layout_width="130sp"
-                android:layout_height="150sp"
-                android:layout_margin="5sp"
-                android:layout_weight="1"
-                android:src="@drawable/clouds" />
-
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/weatherCV"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
+                android:layout_margin="5dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="7dp"
+                app:cardMaxElevation="4dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
 
-                <TextView
-                    android:id="@+id/txtLocation"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="clip_horizontal"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/brawler"
-                    android:text="Location : Your Location"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="15sp">
 
-                <TextView
-                    android:id="@+id/txtTemperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="clip_horizontal"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/brawler"
-                    android:text="Temperature : 32°C"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="130sp"
+                        android:layout_height="150sp"
+                        android:layout_margin="5sp"
+                        android:layout_weight="1"
+                        android:src="@drawable/clouds" />
 
-                <TextView
-                    android:id="@+id/txtDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="clip_horizontal"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/brawler"
-                    android:text="Description : clear sky"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txtHumidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="clip_horizontal"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/brawler"
-                    android:text="Humidity : 16 %"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/txtLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="clip_horizontal"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/brawler"
+                            android:text="Location : Your Location"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtTemperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="clip_horizontal"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/brawler"
+                            android:text="Temperature : 32°C"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="clip_horizontal"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/brawler"
+                            android:text="Description : clear sky"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtHumidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="clip_horizontal"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/brawler"
+                            android:text="Humidity : 16 %"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
 
-            </LinearLayout>
+                    </LinearLayout>
 
-        </LinearLayout>
+                </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
 
     <androidx.cardview.widget.CardView
