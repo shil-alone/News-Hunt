@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/shila/AndroidStudioProjects/News-Hunt/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/Users/shila/AndroidStudioProjects/News-Hunt/app/src/main/res/drawable/btn_background.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/shila/AndroidStudioProjects/News-Hunt/app/src/main/res/layout/activity_countries.xml" value="0.18518518518518517" />
+        <entry key="..\:/Users/shila/AndroidStudioProjects/News-Hunt/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/shila/AndroidStudioProjects/News-Hunt/app/src/main/res/layout/activity_splash.xml" value="0.209375" />
+        <entry key="..\:/Users/shila/AndroidStudioProjects/News-Hunt/app/src/main/res/layout/activity_weather.xml" value="0.1" />
       </map>
     </option>
   </component>
