@@ -24,8 +24,8 @@ your city.
 
 <p float="center">
     <img src="https://github.com/shil-alone/News-Hunt/blob/master/screenshots/5_news.jpg" alt="Weather" width="216" height="492"  />
-    <img src="https://github.com/shil-alone/Quiz-Hunt/blob/master/screenshots/1_quiz.jpg" alt="Countries"  width="216" height="492"  />
-    <img src="https://github.com/shil-alone/Quiz-Hunt/blob/master/screenshots/6_quiz.jpg" alt="Settings"  width="216" height="492"  /> 
+    <img src="https://github.com/shil-alone/News-Hunt/blob/master/screenshots/1_quiz.jpg" alt="Countries"  width="216" height="492"  />
+    <img src="https://github.com/shil-alone/News-Hunt/blob/master/screenshots/6_quiz.jpg" alt="Settings"  width="216" height="492"  /> 
    
 </p>
 
